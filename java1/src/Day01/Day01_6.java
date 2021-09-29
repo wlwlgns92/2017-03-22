@@ -2,7 +2,7 @@ package Day01;
 
 import java.util.Scanner;
 
-public class Day01_06 {
+public class Day01_6 {
 
 	public static void main(String[] args) {
 		// 문제3 : 방문록 입력받아 출력하기

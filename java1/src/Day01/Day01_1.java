@@ -6,6 +6,7 @@ public class Day01_1 { // 클래스 {: 시작, } : 끝
 	
 	//main 함수 main 스레드 포함 [실행코드]
 	// 스레드 : 코드 읽어주는 역할 [ CPU가 읽어줌 ] 
+	// main 괄호 밖에 있는 코드는 실행 불가.
 	public static void main(String[] args) { // main : 메소드
 		// public : 접근제한자
 		// static : 정적
@@ -20,5 +21,5 @@ public class Day01_1 { // 클래스 {: 시작, } : 끝
 		// . : 접근연산자 [클래스내 변수나 함수 접근할때 사용]
 		
 	}
-
+	
 }
