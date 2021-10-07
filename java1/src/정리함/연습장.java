@@ -1,79 +1,116 @@
 package 정리함;
 
-import java.util.Random;
 import java.util.Scanner;
 
 public class 연습장 {
-	// 1. 사용자로부터 6개 수를 입력받아 배열에 저장
+	// 100개 계좌객체를 저장할수 있는 배열 선언
+	// main메소드 밖에 선언시 : main메소드 외 모든 메소드에서 호출 가능 
+	private static Account_Practice[] accountArray = new Account_Practice[100];
+	private static Scanner scanner = new Scanner(System.in);
 	public static void main(String[] args) {
 		
-		// 입력객체
-		Scanner scanner = new Scanner(System.in);
-		//배열 [ 배열선언 : 자료형[] 배열명 = new 자료형[길이]  ]
-		int[] number = new int[6]; // int 형 6개 변수를 저장할 수 있는 배열
-		int[] random = new int[6];
-		for(int i=0; i<6; i++) {
-			System.out.println(i+ "번째 번호 번호[1~45] 선택"); 
-			int num = scanner.nextInt();// 입력받은 값을 해당 인덱스 배열에 저장
+		boolean run = true;
+		while(run) {
+			System.out.println("--------------------------");
+			System.out.println("1.계좌생성|2.계좌목록|3.예금|4.출금|5.종료");
+			System.out.println("---------------------------");
+			System.out.print("선택> : "); int selectNo = scanner.nextInt();
+			System.out.println();
 			
-			
-			// 다른수를 넣었을때
-			if (num <1 || num > 45 ) {// 0~45 사이가 아닐경우
-				System.out.println("알림 : 0 ~ 45 사이만 입력 가능합니다. : 다시 입력");
-				i--; // 정상적인 입력이 아니기 때문에 i 차감
-				continue;
-			}
-			boolean check = true; // 중복이 없을경우는 true 중복이 있을경우는 false
-			//중복체크 : 만약에 입력한 값이 배열내 동일한 값이 존재하면 다시 입력
-		for ( int j = 0; j<6; j++) {
-			if( num == number[j]) { //중복찾기 성공
-			System.out.println("[[ 알림]] : 선택한 수는 이미 존재합니다. : 다시 입력");
-			i--;
-			check = false; // 중복이 있을경우
-			break;
-			}
+			if(selectNo == 1) { createAccount(); }
+			else if (selectNo == 2) { accountList(); }
+			else if (selectNo == 3) { deposit();}
+			else if (selectNo == 4) {withdraw(); }
+			else if (selectNo == 5) { run=false;} 
 		}
-		if(check) number[i] = num;
-		// 1~45 사이의 수 이면서 중복수가 아니면 i번째 배열에 저장
-		number[i] = num;
-		}
-		//2. 출력
-		System.out.println(" 사용자가 선택한 수 : ");
-		for(int i=0; i<6; i++) {
-			System.out.print(number[i] + " ");
-		}
-		System.out.println();
+			System.out.println("프로그램 종료");
+			System.out.println();
+	}	
+	//계좌생성
+	private static void createAccount() {
+		System.out.println("--------------------");
+		System.out.println("계좌생성");
+		System.out.println("--------------------");
 		
+		//입력받기 
+		System.out.print("생성하실 계좌번호를 입력하세요 : "); String ano = scanner.next();
+		System.out.print("계좌를 생성하시는 본인 성함을 적어주세요 : "); String owner = scanner.next();
+		System.out.print("초기 입금액을 입력해 주세요 : "); int balance = scanner.nextInt();
 		
-		for(int i=0; i < 6; i++) {
-			Random random2 = new Random();
-			int num = random2.nextInt(45)+1; // 난수 객체에서 1~ 45 사이의 난수를 가져오기 45를 입력하면 0~44 까지 나오기에 +1	
-			boolean check = true; // 중복여부 확인 체크
-			for(int j = 0; j<6; j++) { // 반복하면서 배열내 중복값 찾기
-				if(num == random[j]) { // 만약에 난수가 기존 배열내 값과 동일하면 
-					i--;
-					break;
-				}
-			}
-			if(check) random[i]= num; //중복값이 없을경우 i번째에 난수 넣기
-		}
-		System.out.println(" 이번주 로또의 추첨번호 : ");
-		for(int i=0; i<6; i++) {
-			System.out.print(random[i] + " ");
-		}
-		System.out.println();	
+		Account_Practice account = new Account_Practice(ano, owner, balance);
 		
-		// 5. 두 배열내 동일한 수 체크
-		int count = 0;
-		for(int i=0; i<6; i++) {// i는 number 배열의 인덱스
-			for(int j=0; j<6; j++) {// j 는 random 배열의 인덱스 -> 36번 비교 [ i당 j느,ㄴ 6번씩 비교]
-				if(number[i] == random[j]) {
-					count++; // 맞은 수 변수를 1증가
-				}
+		for(int i=0; i<accountArray.length; i++) {
+			if(accountArray[i] == null) {
+				accountArray[i] = account;
+				System.out.println("계좌가 생성되었습니다.");
+				break; //계좌생성완료시 반복문 종료
 			}
 		}
-		System.out.println(" 추첨 결과 : "+ count);
 	}
-	
+	//계좌목록
+	private static void accountList() {
+		System.out.println("--------------------");
+		System.out.println("계좌목록");
+		System.out.println("--------------------");
+		
+		//1 배열내 모든 인덱스 호출
+		for(int i=0; i<accountArray.length; i++) {
+			if(accountArray[i] ==null) break;
+			System.out.println(accountArray[i].getAno() + "\t" 
+			+ accountArray[i].getOwner() + "\t" + accountArray[i].getBalance());
+		}
+		
+	}
+	// Account 배열에서 ano와 동일한 Account객체찾기 메소드 [ 인수o( String ano ) 반환o ( Account 객체 ) 
+	private static Account_Practice findAccount( String ano ) {
+		Account_Practice account = null;
+		for(int i=0; i<accountArray.length; i++) {
+			if(accountArray[i] != null) {
+				if(accountArray[i].getAno().equals(ano)) {
+				account = accountArray[i];
+				break;
+				}
+			}
+		}
+		return account;
+	}
+	//예금하기
+	private static void deposit() {
+		System.out.println("--------------------");
+		System.out.println("예금하기");
+		System.out.println("--------------------");
+		
+		System.out.println("계좌번호를 입력해주세요 : "); String ano = scanner.next();
+		System.out.println("입금하실 금액을 입력해 주세요 : "); int balance = scanner.nextInt();
+		
+		Account_Practice account = findAccount(ano);
+		
+		if(account == null) {
+			System.out.println("일치하는 계좌가 없습니다. ");
+			return;
+		}
+		account.setBalance(account.getBalance() + balance);
+		System.out.println("결과 : 예금이 성공되었습니다.");
+		
+	}
+	//출금하기
+	private static void withdraw() {
+		System.out.println("--------------------");
+		System.out.println("출금하기");
+		System.out.println("--------------------");
+		
+		System.out.println("계좌번호를 입력해주세요 : "); String ano = scanner.next();
+		System.out.println("출금하실 금액을 입력해 주세요 : "); int balance = scanner.nextInt();
+		
+		Account_Practice account = findAccount(ano);
+		
+		if(account == null) {
+			System.out.println("일치하는 계좌가 없습니다. ");
+			return;
+		}
+		account.setBalance(account.getBalance() - balance);
+		System.out.println("결과 : 출금이 성공되었습니다.");
+		
+	}
 } 
 
