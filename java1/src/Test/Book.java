@@ -1,93 +1,162 @@
 package Test;
 
 public class Book {
-
 	//필드
 	private String b_ISBN;
 	private String b_name;
 	private boolean b_rental;
-	private String m_name;
+	private String m_id;
+	
+	
+	
 	//생성자
 	public Book() {
-		}
-	public Book(String b_ISBN, String b_name, boolean b_rental, String m_name) {
+		super();
+	}
+
+
+
+
+	public Book(String b_ISBN, String b_name, boolean b_rental, String m_id) {
+		super();
 		this.b_ISBN = b_ISBN;
 		this.b_name = b_name;
 		this.b_rental = b_rental;
-		this.m_name = m_name;
+		this.m_id = m_id;
 	}
-	//메소드
-	public boolean book_add() {
-		System.out.println("------------------도서등록------------------");
-		System.out.println("등록하실 자료의 ISBN을 입력해주세요 : "); String b_ISBN = BookApplication.scanner.next();
-		boolean check = bookcheck(b_ISBN);
+
+
+
+	public static boolean b_add () {
+		System.out.println("--------도서등록---------");
+		System.out.print("등록하실 도서의 ISBN을 입력해주세요 : "); String b_ISBN = BookApplication.scanner.next();
+		boolean check = b_check(b_ISBN);
 		if(check) {
-			System.out.println("동일한 도서코드가 존재합니다.");
+			System.out.println("동일한 ISBN을 가진 자료가 있습니다.");
 			return false;
 		}
+		System.out.print("등록하실 도서명을 입력해주세요 : "); String b_name = BookApplication.scanner.next();
 		
-		System.out.println("등록하실 자료의 자료명을 입력해주세요 : "); String b_name = BookApplication.scanner.next();
-		System.out.println();
-		
-		Book book = new Book(b_ISBN, b_name, b_rental, b_name);
-		for(int i=0 ; i < BookApplication.books.length; i++) {
-			if(BookApplication.books[i] == null) {
-				BookApplication.books[i]= book;
-				System.out.println("등록이 완료되었습니다."); return true;
+		Book book = new Book(b_ISBN, b_name, false, null);
+		for(int i=0; i < BookApplication.book.length; i++) {
+			if(BookApplication.book[i] == null) {
+				BookApplication.book[i] = book;
+				System.out.println("도서가 등록되었습니다.");
 			}
-		}return false;
+		}
+		return false;
 	}
 	
-	public boolean bookcheck(String check_ISBN) {
-		for(int i = 0; i < BookApplication.books.length; i++) {
-			if(BookApplication.books[i] != null &&
-				BookApplication.books[i].getB_ISBN().equals(check_ISBN)) {
+	public static void b_list () {
+		System.out.println("---------------도서목록--------------");
+		for(int i = 0; i < BookApplication.book.length; i++) {
+			if(BookApplication.book[i] == null) return;
+			Book book = BookApplication.book[i];
+			System.out.println(book.getB_ISBN()+"\t"+book.getB_name()+"\t"+book.getB_rental()+"\t"+ book.getM_id());
+		}
+		return;
+	}
+	
+	public static boolean b_check (String check_isbn) {
+		for(int i=0; i < BookApplication.book.length; i++ ) {
+			if(BookApplication.book[i] != null &&
+					BookApplication.book[i].getB_ISBN().equals(check_isbn)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	public void book_list() {
-		System.out.println("------------------도서 목록 페이지 ----------------");
-		System.out.println("도서코드\t도서명\t대여여부\t대여회원");
-		for(int i = 0; i < BookApplication.books.length; i++) {
-			if(BookApplication.books[i] == null) return;
-			Book book = BookApplication.books[i];
-			
-			System.out.println(book.getB_ISBN()+book.getB_name()+book.getB_rental()+book.getM_name());
+	
+	public boolean b_rental (String loginid) {
+		System.out.println("-----------------대여--------------");
+		System.out.print("대여하실 자료의 ISBN을 입력해주세요 : "); String b_ISBN = BookApplication.scanner.next();
+		
+		boolean check = b_check(b_ISBN);
+		if(check) {
+			for(int i=0; i < BookApplication.book.length; i++) {
+				if(BookApplication.book[i] != null && BookApplication.book[i].getB_ISBN().equals(b_ISBN)) {
+					if(BookApplication.book[i].getB_rental()) {
+						System.out.println("대출 가능한 자료입니다. 대여성공");
+						BookApplication.book[i].setB_rental(false);
+						return true;
+					}else { 
+						System.out.println("현재 대출중인 자료입니다.");
+					}
+				}
+			}
 		}
-		return;
+		return false;
 	}
-	public boolean book_rental( String loginid ) {
+	
+	public boolean b_return (String loginid) {
+		System.out.println("-----------------반납--------------");
+		System.out.print("반납하실 자료의 ISBN을 입력해주세요 : "); String b_ISBN = BookApplication.scanner.next();
 		
+		for(int i = 0; i < BookApplication.book.length; i++) {
+			if(BookApplication.book[i] != null && BookApplication.book[i].getB_rental()) {
+				if(BookApplication.book[i].getB_ISBN().equals(b_ISBN)) {
+					if(BookApplication.book[i].getM_id().equals(loginid)) {
+						System.out.println("반납성공");
+						BookApplication.book[i].setM_id(null);
+						BookApplication.book[i].setB_rental(true);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
-	public boolean book_return( String loginid ) {
-		
-	}
+	//메소드
 	public String getB_ISBN() {
 		return b_ISBN;
 	}
+
 	public void setB_ISBN(String b_ISBN) {
 		this.b_ISBN = b_ISBN;
 	}
+
+
+
+
 	public String getB_name() {
 		return b_name;
 	}
+
+
+
+
 	public void setB_name(String b_name) {
 		this.b_name = b_name;
 	}
+
+
+
+
 	public boolean getB_rental() {
 		return b_rental;
 	}
+
+
+
+
 	public void setB_rental(boolean b_rental) {
 		this.b_rental = b_rental;
 	}
-	public String getM_name() {
-		return m_name;
+
+
+
+
+	public String getM_id() {
+		return m_id;
 	}
-	public void setM_name(String m_name) {
-		this.m_name = m_name;
+
+
+
+
+	public void setM_id(String m_id) {
+		this.m_id = m_id;
 	}
+	
 	
 	
 	
