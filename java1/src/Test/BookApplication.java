@@ -23,9 +23,10 @@ public class BookApplication {
 	 * - 관리자 정보 배열에 저장
 	 * - 로그인 페이지에서 위 데이터로 들어가면 관리자
 	 */
+	
+	public static Member[] members = new Member[100];
+	public static Book[] books = new Book[100];
 	public static Scanner scanner = new Scanner(System.in);
-	public static Member[] member = new Member[100];
-	public static Book[] book = new Book[100];
 	public static void main(String[] args) {
 		
 		while(true) {
@@ -56,7 +57,7 @@ public class BookApplication {
 			if(ch==1) {book.b_list();  }
 			if(ch==2) {book.b_rental(loginid); }
 			if(ch==3) {book.b_return(loginid);  }
-			if(ch==4) {System.out.println("로그아웃 되었습니다.");  }
+			if(ch==4) {System.out.println("로그아웃 되었습니다."); return;  }
 		}
 	}
 	public static void admin_menu () {
@@ -69,7 +70,7 @@ public class BookApplication {
 			
 			if(ch==1) {book.b_add(); }
 			if(ch==2) {book.b_list(); } 
-			if(ch==3) {System.out.println("로그아웃되었습니다."); } 
+			if(ch==3) {System.out.println("로그아웃되었습니다."); return;} 
 			
 		}
 	}

@@ -13,7 +13,10 @@ public class Member {
 	//생성자
 	
 	public Member(String m_id, String m_pw, String m_name, String m_phone) {
-		
+		this.m_id = m_id;
+		this.m_pw = m_pw;
+		this.m_name = m_name;
+		this.m_phone = m_phone;
 	}
 	public Member() {
 		
@@ -32,10 +35,12 @@ public class Member {
 		System.out.print("비밀번호를 입력하세요 : "); String m_pw = BookApplication.scanner.next();
 		System.out.print("이름을 입력하세요 : "); String m_name = BookApplication.scanner.next();
 		System.out.print("연락처를 입력하세요 : "); String m_phone = BookApplication.scanner.next();
+		
 		Member member = new Member(m_id, m_pw, m_name, m_phone);
-		for(int i =0; i < BookApplication.member.length; i++) {
-			if(BookApplication.member[i] == null) {
-				BookApplication.member[i] = member;
+		
+		for(int i =0; i < BookApplication.members.length; i++) {
+			if(BookApplication.members[i] == null) {
+				BookApplication.members[i] = member;
 				System.out.println("회원가입이 완료되었습니다.");
 				return true;
 			}
@@ -47,9 +52,9 @@ public class Member {
 		System.out.print("아이디를 입력하세요 : "); String m_id = BookApplication.scanner.next();
 		System.out.print("비밀번호를 입력하세요 : "); String m_pw = BookApplication.scanner.next();
 		
-		for(int i=0; i < BookApplication.member.length; i++) {
-			if(BookApplication.member[i] != null && BookApplication.member[i].getM_id().equals(m_id) &&
-					BookApplication.member[i].getM_pw().equals(m_pw)) {
+		for(int i=0; i < BookApplication.members.length; i++) {
+			if(BookApplication.members[i] != null && BookApplication.members[i].getM_id().equals(m_id) &&
+					BookApplication.members[i].getM_pw().equals(m_pw)) {
 				System.out.println("로그인이 성공되었습니다.");
 				return m_id;
 			}
@@ -57,8 +62,8 @@ public class Member {
 		return null;
 	}
 	public static boolean idcheck (String check_id) {
-		for(int i=0; i < BookApplication.member.length; i++) {
-			if(BookApplication.member[i] != null && BookApplication.member[i].getM_id().equals(m_id) ) {
+		for(int i=0; i < BookApplication.members.length; i++) {
+			if(BookApplication.members[i] != null && BookApplication.members[i].getM_id().equals(check_id) ) {
 				return true;
 			}
 		}
@@ -68,10 +73,10 @@ public class Member {
 		System.out.print("이름을 입력하세요 : "); String m_name = BookApplication.scanner.next();
 		System.out.print("연락처를 입력하세요 : "); String m_phone = BookApplication.scanner.next();
 		
-		for(int i=0; i < BookApplication.member.length; i++) {
-			if(BookApplication.member[i] != null && BookApplication.member[i].getM_name().equals(m_name) &&
-					BookApplication.member[i].getM_phone().equals(m_phone)) {
-				System.out.println("사용자의 아이디는  : "+ BookApplication.member[i].getM_id());		
+		for(int i=0; i < BookApplication.members.length; i++) {
+			if(BookApplication.members[i] != null && BookApplication.members[i].getM_name().equals(m_name) &&
+					BookApplication.members[i].getM_phone().equals(m_phone)) {
+				System.out.println("사용자의 아이디는  : "+ BookApplication.members[i].getM_id());		
 			}else {
 				System.out.println("입력하신 정보가 존재하지 않습니다."); 
 				break;
@@ -84,10 +89,10 @@ public class Member {
 		System.out.print("이름을 입력하세요 : "); String m_name = BookApplication.scanner.next();
 		System.out.print("연락처를 입력하세요 : "); String m_phone = BookApplication.scanner.next();
 		
-		for(int i=0; i < BookApplication.member.length; i++) {
-			if(BookApplication.member[i] != null && BookApplication.member[i].getM_name().equals(m_name) &&
-					BookApplication.member[i].getM_phone().equals(m_phone)) {
-				System.out.println("사용자의 아이디는  : "+ BookApplication.member[i].getM_id());		
+		for(int i=0; i < BookApplication.members.length; i++) {
+			if(BookApplication.members[i] != null && BookApplication.members[i].getM_name().equals(m_name) &&
+					BookApplication.members[i].getM_phone().equals(m_phone)) {
+				System.out.println("사용자의 아이디는  : "+ BookApplication.members[i].getM_id());		
 			}else {
 				System.out.println("입력하신 정보가 존재하지 않습니다."); 
 				break;

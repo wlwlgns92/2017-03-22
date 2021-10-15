@@ -1,0 +1,52 @@
+
+
+시작 날짜와 끝 날짜를 입력받아 달력 출력하기
+
+끝 연도/ 월 입력받기
+		// 시작 날짜부터 끝날짜까지의 모든 달력 출력
+		
+		
+		
+		팀문제 : 로그인 /회원가입 프로그램[파일처리]
+			scanner
+		메인메뉴 while
+		
+		조건1 : 회원가입시 회원정보 파일에 저장
+		
+		저장하기
+		FileOutputStream 객체명 = new FileOutputStream("파일경로");
+		fileOutputStream.write(변수명.getBytes()); 바이트로변환
+		
+		읽어오기
+		FileInputStream 객체명 = new FileInputStream("파일경로/파일명.확장자");
+		byte[] 바이트배열 = new byte[1024]; 읽어온 바이트를 저장할 배열
+		fileInputStream.read(배열명);
+		String 변수명 = new String(배열명);
+		System.out.println("현재 파일의 내용은 : " + 변수명); 읽어오기
+		
+		입력한것을 저장
+		while(true) {
+			System.out.println("메모장에 입력할 데이터 : ");
+			String 변수명 = scanner.next();
+			변수명 = 변수명+"\n";
+			fileOutputStream.write(outstr.getBytes());
+		}
+		
+		
+		
+			회원클래스 : 아이디 , 비밀번호, 성명, 연락처
+			필드 : 아이디 , 비밀번호, 성명, 연락처
+			생성자 : 
+			메소드 : 
+			
+			
+		조건2 : 로그인시 파일내 회원정보가 존재하면 로그인 성공
+		
+		
+		
+		성적 입력은 5명 무제한 입력
+		평균
+		소숫점 이하2자리
+		총점이용석차
+		입력 예외
+		
