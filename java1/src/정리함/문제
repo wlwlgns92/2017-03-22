@@ -171,10 +171,39 @@
 		
 		
 		
+				패키지 구성
+					MVC 패턴
+					M(model) : DTO
+					V(view) : front (프론트)
+					C(control) : m <-- 제어 --> view
+					database : DB, File
+					
+					2. 클래스 구성
+							Data : File
+							M : Member, Board, Reply
+							V : Application( mainmenu, membermenu, boardmenu
+							C : MemberController, BoardController, ReplyController
+							
+					3. 클래스 설계 [ 필드, 생성자, 메소드 ]
+							Member
+									id, password, name, email, point
+									빈생성자, 전체 생성자
+									get,set
+									
+							File
+								필드 : filepath
+								메소드 : save, load
+								
+								
+							MemberController
+								필드 : Arraylist<Member> memberlist
+								메소드 : login, signup, forgotid, forgotpassword, logout, info, update, delete
 		
-		
-		
-		
+						[코드]
+								1. Java 프로젝트 생성 [선생님은 JDK1.8] 
+								2. 패키지구성 model, Controller, view, Database
+								3. 뼈대[클래스 선언, 멤버선언]
+								4. 
 		
 		
 		
