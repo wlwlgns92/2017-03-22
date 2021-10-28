@@ -204,7 +204,23 @@
 								2. 패키지구성 model, Controller, view, Database
 								3. 뼈대[클래스 선언, 멤버선언]
 								4. 
-		
+						
+						Board
+						필드 title, contents, writer, date, view, Arraylist<Reply>
+						
+						
+						Reply
+						필드 contents, writer, date
+						
+						
+						BoardController
+						메소드 : add, detail, update, delete
+						
+						RepluController
+						메소드 : add
+				
+						
+						
 		
 		
 		
