@@ -1,0 +1,46 @@
+게시판 설계
+
+1. DB설계
+
+	게시물번호 int
+	게시물제목 String
+	게시물내용 String
+	게시물작성자 String [ 로그인된 id]
+	게시물작성일 String [ 자동 주입 ]
+	게시물조회수 int
+
+
+
+2. DTO 설계
+
+3. DAO 설계
+
+
+---------------
+
+4. FXML 작성
+5. CONTROLLER 작성
+6. DAO 작성
+
+DDL : 정의어
+	create table DB명.테이블명 (
+	필드명1 타입 속성,
+	필드명2 타입 속성,
+	필드명3 타입 속성   (마지막은 , 안씀)
+	)
+	
+	자료형
+		int : 정수 
+		varchar : 문자열	(4바이트)
+		timestamp : 날짜/시간 (4바이트)
+	속성
+		primary key : 기본키[pk]
+		auto_increment : 자동 번호 주입
+		not null : 널값 제외 
+		default : 초기값
+
+	함수
+		now() : 현재날짜/시간
+			
+	insert : 행추가(레코드)
+	
