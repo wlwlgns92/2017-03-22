@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+		<h1>회원 가입</h1>
+		
+		<form>
+		<br> 아이디 : <input type="text">
+		<br> 이름 : <input type="text">
+		<br> 비밀번호 : <input type="password">
+		<br> 비밀번호 확인 : <input type="password">
+		<br> 전화번호 : <input type="text" value="010-1234-1234">
+		<br> 이메일 : <input type="text"> @ 
+		<select>
+		<option>직접 입력</option>
+		<option>naver.com</option>
+		<option>gmail.com</option>
+		</select>
+		<br> 문자수신 여부<input type="radio" name = "email" checked="checked"> 예
+					<input type="radio" name = "email"> 아니오
+		<br> 가입경로 <input type="checkbox" name="경로1"> 친구소개
+					<input type="checkbox" name="경로2"> 인터넷 검색
+					<input type="checkbox" name="경로3"> 블로그
+					<input type="checkbox" name="경로4"> 기타
+		<br> <input type="submit" value = "회원가입">
+		
+		<h1>답변 글쓰기</h1>
+		
+		<br> 이름 <input type="text" value="홍길동" readonly="readonly">
+		<br> 제목 <input type="text" value="RE:">
+		<br> 내용 <textarea rows="7" cols="80"></textarea>
+		<br> <input type="submit" value="전송">
+		</form>
+		
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<h1>폼 양식 : 사용자가 키보드로 데이터 입력하거나 마우스 선택할 수 있는 서식</h1>
+	<form>
+	이름 : <input type="text" value = "유재석" readonly="readonly"> <!-- readonly 수정 금지 -->
+	<br> 아이디 : <input type="text" placeholder="아이디 입력" autofocus="autofocus"> <!-- placeholder 상자의 설명 --> <!-- autofocus 마우스 커서가 해당 탭으로 이동 -->
+	<br> 회원등급 : <input type="text" value="일반" disabled="disabled"> <!-- disabled 수정금지 -->
+	<br> 비밀번호 : <input type="password">
+	
+	
+	<br> <input type="button" value ="버튼">
+	<br> <input type="radio" name = "email" checked = "checked"> 예 
+		<input type="radio"name = "email"> 아니오
+		<!-- radio는 name이 동일한 경우 그룹[1개의 버튼만 선택가능] -->
+		
+		<br>
+		<input type="checkbox" name="item1"  checked = "checked"> 뉴스
+		<input type="checkbox" name="item2"> 드라마
+		<input type="checkbox" name="item3"> 스포츠
+		<!-- checkbox는 name이 동일한 경우에도 복수선택 가능 -->
+		
+	<br> 
+		이메일 : <input type="text">@ 
+		<select>						<!-- select option [select = 목록상자], [option = 목록 상자 값넣기] -->
+			<option>naver.com</option>
+			<option>gamil.com</option>
+			<option>nate.com</option> 
+		</select>
+		
+	<br>
+		자기소개
+			<textarea rows="6" cols="80"></textarea> <!-- textarea=긴글박스 row: 행문자수 col: 열 문자수 -->
+	<br>
+		<input type="File"> <!-- 첨부파일 -->
+	<br> <input type="button" value="버튼">	<!-- 폼 이벤트 -->
+		<input type="submit" value="저장하기"> <!-- 폼 저장[전송 action = "전송경로"] -->
+		 <input type="reset" value="다시쓰기"> <!-- 폼 초기화 -->
+	
+	
+</body>
+</html>
