@@ -38,7 +38,17 @@ public class 회원방문록 {
 					}
 				}
 			}
-			
+			if(ch == 2) {
+				System.out.print("아이디를 입력해주세요 : "); String id2 = scanner.next();
+				System.out.print("비밀번호를 입력해 주세요 : "); String pw2 = scanner.next();
+				
+				for(int i =0; i < 회원정보.length; i ++) {
+					if(회원정보[i][0].equals(id2) && 회원정보[i][1].equals(pw2) && 회원정보[i][0] != null) {
+						System.out.println("로그인 성공");
+					}
+				}
+				
+			}
 		}
 	}
 }
