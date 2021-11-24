@@ -54,16 +54,15 @@ public class 키오스크 {
 				System.out.println("결제하시겠습니까 ? 1.예 | 2.아니오"); int ch2 = scanner.nextInt(); // 선택 입력
 				if(ch2==1) { // 만약에 결제 선택이 1번이라면
 					System.out.println("금액을 넣어주세요 "); int 돈 = scanner.nextInt(); // 돈 입력받기
-					if(돈 < total) {  // 만약에 돈이 합계금액보다 작다면
-						System.out.println("금액이 부족합니다."); // 문구출력
-						// 왜 continue를 쓰지 않았는데 반복문이 다시 실행되는가
-					}else { // 아니면 (돈>total)
-						System.out.println("결제가 완료되었습니다. 잔돈을 받아가세요 잔돈 : " + (돈-total)+"원"); // 문구 출력 및 잔액(돈-total) 출력
-					}
+						if(돈 < total) {  // 만약에 돈이 합계금액보다 작다면
+							System.out.println("금액이 부족합니다."); // 문구출력
+						}else { // 아니면 (돈>total)
+							System.out.println("결제가 완료되었습니다. 잔돈을 받아가세요 잔돈 : " + (돈-total)+"원"); // 문구 출력 및 잔액(돈-total) 출력
+						}
 				}else { 
 					// return 을 넣으면 어떻게 되나
 				}
-			}else {
+			}else {	// 1~4 외의 숫자를 누르면
 				System.out.println("잘못된 입력입니다.");
 			}
 		}
