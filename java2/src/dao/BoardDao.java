@@ -192,4 +192,16 @@ public class BoardDao {
 			}
 			}catch (Exception e) {} return 0;
 		}
+		
+		public String selectwriter() {
+			
+			String sql = "select m_id from Member where m_num = 1";
+			try {
+				preparedStatement = connection.prepareStatement(sql);
+				resultSet = preparedStatement.executeQuery();
+				if(resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			} catch (Exception e) {} return "";
+		}
 }
