@@ -1,0 +1,24 @@
+@charset "EUC-KR";
+
+/* À¥ ÆùÆ® */
+
+@font-face {
+    font-family: 'CWDangamAsac-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{ font-family: 'CWDangamAsac-Bold';}
+
+header{
+	border-bottom: solid 1px black;
+	line-height: 1;
+}
+.header-logo{
+	font-size: 2.25rem;
+}
+.header-topmenu{ font-size: 0.25rem;}
+.carousel-item img { width: 100%; }
+.item{ font-size: 0.75rem; line-height: 150%;}
+.price{ text-decoration: line-through;}
+.main-footer{ font-size: 0.60rem; border-top: solid 1px #eeeeee; padding: 3rem; }
