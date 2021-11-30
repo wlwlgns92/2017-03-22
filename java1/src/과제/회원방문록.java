@@ -15,7 +15,7 @@ public class 회원방문록 {
 		Scanner scanner = new Scanner(System.in);
 		
 		while(true) {
-			
+			//
 			System.out.println("회원제 게시판");
 			System.out.print("1.회원가입 | 2.로그인 | 선택 : "); int ch = scanner.nextInt();
 			
