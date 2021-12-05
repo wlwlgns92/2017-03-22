@@ -52,7 +52,6 @@ public class Day05_5_게시판_클래스 {
 						board.count=1; 
 						boards[i] = board; break;
 					}
-					
 				}
 			}if (ch==2) {
 				System.out.println("게시물 번호 선택 : "); int ch2= scanner.nextInt();
@@ -66,7 +65,6 @@ public class Day05_5_게시판_클래스 {
 						"\t조회수" + boards[ch2].count);
 				System.out.println(">>> 내용 : " + boards[ch2].contents);
 				System.out.println("--------------------------------------");
-				
 			}
 		
 		}//we
