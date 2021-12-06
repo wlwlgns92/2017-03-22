@@ -160,6 +160,31 @@
 								
 			
 			
+		14. 파일 업로드
+			- cos.jar 라이브러리 이용 [ 파일 복사 라이브러리 ] 
+			
+			1. 파일 업로드
+				1. form인코딩 : enctype="multipart/form-data"
+				2. MultipartRequest 객체 = new MultipartRequest(1, 2, 3, 4, 5)
+					- 요청방식 : request
+					- 업로드할 폴더 경로
+					- 용량 : 바이트 단위
+					- 인코딩타입 : "UTF-8"
+					- 보안 : new DefaultFileRenamePolicy()
+						* DefaultFileRenamePolicy : 파일명이 동일할 경우 자동으로 파일명 뒤에 번호 매기기
+						
+				3. form변수 요청시 [ form의 인코딩 타입이 multipart일 경우 request 객체 요청 사용 불가]
+					- 객체명.getParameter() : 변수값 요청
+					- 객체명.getFilesystemName() : 첨부파일에 올라간 파일명 요청
+					워크스페이스 : 작업폴더
+					서버폴더 : 서버실행시 작업폴더에 있는 파일들을 서버로 이동	
+					서버 구동 
+						1. 프로젝트 실행 - 프로젝트내 /서블릿/프론트엔드 분라
+						2. 서버폴더에 배치
+						3. 클라이언트는 서버 폴더내 파일만 요청/ 응답
+		
+				
+				
 			
 			
 			

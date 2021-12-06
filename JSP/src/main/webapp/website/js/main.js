@@ -59,6 +59,36 @@
 }
 	/* 다음 api 종료 */
 	
+	/* 회원탈퇴 [ ajax : jquery  ] */ 
+
+	// $( function(){ 실행문 });	: js함수 정의하기
+	$( function(){ 
+		// 버튼을 클릭했을때 이벤트 걸기 
+		$("#delete").click( function(){ 
+			// ajax : 비동기식 통신 [ 페이지전환없이 통신 ]
+				//$.ajax({ 속성명:값 , 속성명:값 , 속성명:값  });
+			$.ajax({
+				url : "../../controller/memberdeletecontroller.jsp" ,
+				/* url : 통신 경로 */
+				data : {password:document.getElementById("deleteform").password.value} ,
+				/* data : { 변수명 : 값 } */ 
+				success : function( result  ){
+					if( result == 1 ){
+						alert('회원탈퇴 되었습니다');
+						location.href='../../controller/logoutcontroller.jsp';
+					}else{
+						document.getElementById("deleteresult").innerHTML = "회원정보가 다릅니다.";
+					}
+				
+				}
+			});
+		} ); // 버튼 클릭했을때 함수 끝
+	 }); // 전체 함수 끝 
+
+	
+
+	/* 회원탈퇴 */
+
 	/* 아이디 중복체크 [ajax]*/
 	$(function(){
 		// $("아이디명").이벤트명(함수명(){실행코드;} );
@@ -78,6 +108,33 @@
 			 });
 		});
 	});
+
+	function namechange(){ 
+		
+		// 1. 클릭했을때 html 수정
+		document.getElementById("tdname").innerHTML = "<input type='text' id='name' class='form-control'> <button id='namechangebtn' class='form-control'>확인</button>";
+	
+		$( function(){
+			// $("id명").이벤트명( 함수명(){ 실행코드; } );
+			$("#namechangebtn").click( function() { 
+				$.ajax({ 
+					url : "../../controller/memberupdate.jsp" ,	
+					/* url : 통신할 경로 페이지 */ 
+					data :{ newname:document.getElementById("name").value} , 	
+					/* 이동할 데이터 */
+					success : function( result ){ 
+					/* 통신이 성공했을때*/
+						if( result == 1 ){ 	// js 변수는 자료형 없다
+							document.getElementById("tdname").innerHTML =  document.getElementById("name").value;
+						}else{
+							alert("[ 수정 오류 : 관리자에게문의]");
+						}
+					}
+				});
+			});
+		});
+		
+	}
 
 	/* 회원가입 유효성 검사 */
 	
