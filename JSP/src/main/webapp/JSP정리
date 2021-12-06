@@ -1,0 +1,166 @@
+
+	[ JSP ]
+		1. jsp : java server pages ( 자바 서버 페이지 )
+		2. 서블릿(servlet) : java web program class ( 자바 웹 프로그래밍 클래스 )
+			-문제점 : java와 html 연결이 어렵다 -> 보완 jsp
+			
+		3. jsp : html 파일내 java 작성 가능 ( html + java )
+		4. jsp 구동원리 
+			1. 클라이언트(사용자)가 jsp 요청하면
+			1-1. html반환 		1-2.jsp내 java코드 -> java파일로 변환 -> 결과를 html에 응답 
+				** 클라이언트들은 html파일은 확인 가능하지만 java코드는 확인 불가능
+		5. 태그 
+			<%! 선언문 %> : 1. 전역변수선언 2. 메소드 선언
+			<% 스크립트문 %> : 1. 지역변수선언 2. 실행코드
+			<%= 표현식 %> : html에 java 변수 , 메소드 호출
+			<%-- 주석 --%> : 잘안씀 자바의 주석( // )이  가능해서 
+		
+		5. form
+				action : "이동할 페이지 경로"
+				method : 전송방식
+					*post : URL 변수 작성 안됨 [ 보안 중요한 애들 기록을 남기지 않음 ex) 로그인]
+					*get : URL 변수가 보임	[캐시! (기록) : 다음에 접속할때 빠름 ]
+	
+		6. 내장객체 [ 미리 만들어진 객체 ]
+			request : 변수를 포함한 요청을 담고 있는 객체[ 아스키 코드로 불러온다 ] 
+				 .setCharacterEncoding("EUC-KR") : 요청 문자 타입 
+				 .getParameter("변수명")			 : 해당 변수 요청 [ 문자만 가능 ]
+			response : 요청에 대한 응답을 담고 있는 객
+			out : 출력 스트림 객체
+			sesstion : 세션 정보를 담고 있는 객체 !!!!
+			page : jsp 서블릿 객체[ 서블릿 페이지 정보 ]
+			exception : 
+		7. 지시자
+			1.page지시자 : 페이지속성
+				1. <%@page  %> <!-- 페이지 지시자 -->
+					<%@ page info="jsp시작" %> <!-- page 파일 정보(내용) -->
+					<%@ page language="java" %>  <!-- 스크립트문에 사용할 언어 -->
+					<%@ page import="java.util.ArrayList" %> <!-- 클래스 가져오기 -->
+					<%@ page session="true" %> <!-- 페이지에서 세션 사용여부 -->
+					<%@ page buffer = "none" %> <!-- none: 버퍼없이 브라우저 바로 전송 -->
+					<%@ page isThreadSafe="true" %> <!-- jsp 페이지가 동시에 여러 브라우저가 요청[ 기본 : true ]  -->
+					<%@ page errorPage="7.에러.jsp" %>
+					
+		8. 액션태그
+			1. <jsp:include page="페이지명"> </jsp:include>  : 현재페이지에 페이지 포함
+			2. <jsp:forward page="페이지명"> </jsp:forwad>	  : 페이지 이동 
+				<jsp:param value="데이터" name="변수명>
+			3. 태그 대체 액션태그
+				<%! %> : <jsp:declaration> < /declaration>
+				<% %> : <jsp:scriptlet> </scriptlet>
+				<%= %> : <jsp:expression> </expression>
+			4. 자바빈즈 [ 객체 통신 태그 ]
+		
+		
+		9. 요청 , 응답 [ request , response]
+			
+		10. post , get
+			
+			1. post 
+				* URL에 요청된 변수가 표시가 되지 않는다.
+				* get에 비해 보안이 좋다. ( 로그인, 개인정보 등)
+				* 캐시를 사용하지 않는다. (한번 사용후 기록을 남기지 않는다)
+				* 길이 제한이 없다.
+			2. get
+				* URL에 요청된 변수가 표시가 된다.
+				* post에 비해 보안이 취약하다 (제품명 등 중요도가 낮다고 판단되는 것들)
+				* 캐시를 사용한다 [ 한번 사용하면 기록을 남긴다 ] : 다음에 접속시 빠름
+				* 길이 제한이 있다.
+			
+			사용처 
+				- form(action="이동페이지경로" method=" post , get" )
+				- URL 변수 추가 [ get] : 
+					-페이지명 
+			
+		11. 세션[ session ] , 쿠키
+			
+			1. 세션 : 내장객체 HttpSession
+				* 서버 pc에 데이터 저장 [ 웹페이지 전반적으로 걸쳐 사용되는 변수 ]
+					- 서버에 저장하다보니 보안이 좋다.(로그인, 개인정보 등)
+				* session.setAttribute("세션명", 데이터) : 세션 추가
+				* session.getAttribute("세션명")  호출 : 세션 추출
+				* sesstion.invalidate() : 모든 세션 초기화
+					- session.setAttribute("세션명", null) : 해당 세션 초기화
+				* session.setmaxinactiveinterval(초) : 세션 유지 시간 [ 초당 ]	
+				* 세션 유지 시간 [ 기본 30분 ]
+					
+			2. 쿠키 : 사용자[클라이언트] pc에 데이터 저장
+				* 사용자 pc에 저장하다 보니 보안에 취약하다 (장바구니 등)
+				* 많은 쿠키 사용시 서버 상관 x
+				* 브라우저 닫아도 쿠키 유지
+				* Cookie 쿠키 객체명 = new Cookie("쿠키명", 데이터); 		: 쿠키생성
+				* respone.addCookie(쿠키 객체명);						: 클라이언트{브라우저] 쿠키저장
+					- 쿠키객체명.setMaxAge(초) : 기본값은 세션과 다르게 따로 없다.
+					- 쿠키객체명.setValue("데이터 교체");					: 쿠키 데이터 교환
+				* request.getCookies() 								: 모든 쿠키 요청
+				
+				
+		12. 절대경로 상대경로
+			1. 절대경로 
+				- localhost:8080 ~~~ 
+					- /최상위경로/폴더명/폴더명/파일명
+			2. 상대경로
+				- 현재 페이지 기준으로 
+				- / :최상경로
+				- ../ 상위경로
+				- ./현재경로 [ 생략가능 ]
+				- ../../ 두번위로이동
+				
+				
+		13. 자바스크립트(js) [ html , css 정적기능  js: 동적기능 ]
+			- 선언 위치 body
+			- js 파일 작성후 호출방법 : body 안에 <script src="경로/파일명.js"> </script>
+			- 내장객체에 접근할 수 있는 기능 가지고 있음
+			- 문법
+				1. var 변수명 : 자료형 존재하지 않음
+					- var 변수명 = "안녕하세요"  : 문자열
+					- var 변수명 = 30 		: 정수
+					- var 변수명 = [ 30, 40 ] : 배열
+				2. 반복문 -> java 동일
+				3. 함수
+				 	- 함수 정의시 function 함수명(인수) {} 	: 인수는 자바와 다르게 자료형이 없다.
+				 	- 함수 호출시 : <태그 이벤트속성="함수명(인수);"> : 함수호출
+				 	
+			- js에서 html 접근 방법
+				1. document 			   : 현재 문서[html] 접근 가능
+				2. document.getElementById : html 내 id에 접근	
+				3. document.getElementById("id").textContent = "텍스트(변수도가능)": 해당 id내(<><> 사이) text 넣기
+				4. document.getElementById("id").innerHTML = "텍스트(변수도가능)": 해당 id내 HTML 추가
+				5. document.getElementById("id").style.속성명(color 등)="값" 	: 해당 id에 css style 적용가능
+				6. document.태그명
+				
+			- 정규표현식 [ 텍스트 패턴 검사 ]
+				- /^ : 정규표현식 시작
+				- $/ : 정규표현식 끝
+				- [] : 문자패턴 사용시 
+					[a-z] : 소문자만 가능
+					[A-Z] : 대문자만 가능
+					[0-9] : 숫자 0 - 9 까지 가능
+					[가-힣] : 한글 가 - 힣 까지 가능 (컴퓨터에서 한글의 마지막 글자는 "힣" 이다)
+				- { } : 문자의 개수 체크
+					{최소길이, 최대길이} 
+					{ 5, 12 } : 5~12길이만 가능
+				-([0|1|6|7|8|9]?) 중 하나 ?는 문자가 있거나 혹은 하나 있음(와일드카드 개념)		
+					- 와일드 카드
+					 * : 문자가 없거나 혹은 여러개 존재
+					 ? : 문자 있거나 혹은 하나 있음[ ?당 문자 1개 ] 
+					 
+			- 동기식 비동기식
+				1. 동기식 : 응답 기다림
+					- 페이지 전환[ 요청,응답 결과 ]
+					- form action = "페이지경로"
+					
+				2. 비동기식 : 응답 기다리지 않음
+					- 페이지 전환x [ 요청에따른 응답 결과 x ]
+					- Ajax [ JQuery ]
+						Ajax({ 속성명:"값", 속성명:"값" ...})
+							url : 이동할 페이지			: 경로 파일명
+							data : { 통신할 데이터 } 	:  변수명 값
+							success : function(result) {} : 결과 가져오기 통신한 페이지의 html
+								
+			
+			
+			
+			
+			
+			
