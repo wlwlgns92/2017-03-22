@@ -12,6 +12,6 @@
 		session.setAttribute("login", null);
 		response.sendRedirect("../view/main.jsp");
 		%>
-
+ 
 </body>
 </html>

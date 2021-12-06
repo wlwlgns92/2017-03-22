@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
-	
+
 	<div class="container"> <!--  박스권-->
 		<div class="row"  > <!-- 가로 박스 -->
 			<div class="col-md-6"> <!--  6 : 6 -->

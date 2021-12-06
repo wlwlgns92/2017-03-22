@@ -15,7 +15,7 @@
 		out.print("<script>alert('로그인이되어있습니다.');</script>");
 		out.println("<script>location.href='../main.jsp';</script>");
 	}
-		
+	
 	%>
 	<%@include file="../header.jsp" %>
 	

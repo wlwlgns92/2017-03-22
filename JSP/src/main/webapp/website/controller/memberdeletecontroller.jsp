@@ -22,7 +22,7 @@
 	}else{ // 탈퇴 실패시 
 		out.print("<script> alert('회원정보가 다릅니다'); </script>");
 		out.println("<script>location.href='../view/member/memberinfo.jsp';</script>");
-
+ 
 	}  */
 %>
     

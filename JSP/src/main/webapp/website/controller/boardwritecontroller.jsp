@@ -5,13 +5,7 @@
 <%@page import="dto.Login"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
 	
 	<%
 		// 1. form [ enctype = "multipart/form-data"]
@@ -39,7 +33,5 @@
 		// db처리
 		BoardDao.getBoardDao().boardwrite(board);
 		
-		response.sendRedirect("../view/boardlist.jsp");
+		response.sendRedirect("../view/board/boardlist.jsp");
 	%>
-</body>
-</html>

@@ -22,7 +22,7 @@
 						 request.getParameter("address2")+","+ 
 						 request.getParameter("address3")+","+
 						 request.getParameter("address4");
-		
+	
 		/* // 유효성검사
 		if(id.equals("") || password.equals("") || passwordconfirm.equals("") || name.equals("") || birth.equals("") || sex.equals("") || phone.equals("") || address.equals("")){
 			out.print("<script>alert('미입력 정보가 있습니다.');</script>");

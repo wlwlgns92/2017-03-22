@@ -10,10 +10,10 @@
 	// 파일이름 요청
 	request.setCharacterEncoding("UTF-8");	
 	String filename = request.getParameter("file");
-	String folderpath = request.getSession().getServletContext().getRealPath("website/upload"+filename);
+	String folderpath = request.getSession().getServletContext().getRealPath("website/upload/"+filename);
 						// request.getSession().getServletContext().getRealPath("website/upload"+filename); 서버내 경로찾기
 	// 서버내 업로드 폴더내 파일 찾아서 파일 객체화
-	File file = new File(folderpath+"/filename");
+	File file = new File(folderpath);
 	// 다운로드 형식 변경
 	response.setHeader("Content-Disposition", "attachment;filename="+filename+";");
 		// setHeader("다운로드 형식html" , "attachment;filename="+filename+";" )
@@ -34,6 +34,6 @@
 			inputStream.close(); // 입력 스트림 닫기 [ 첨부파일 사용시 꼭 닫기]
 			outputStream.close(); // 출력 스트림 닫기 [ 첨부파일 사용시 꼭 닫기] 
 		}
-		
+		 
 		
 %>

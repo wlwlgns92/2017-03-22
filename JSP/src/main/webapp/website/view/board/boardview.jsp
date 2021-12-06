@@ -10,9 +10,9 @@
 </head>
 <body>
 	<%@ include file="../header.jsp" %>
-	
+
 	<%
-	int b_num = Integer.parseInt(request.getParameter("b_num"));
+		int b_num = Integer.parseInt(request.getParameter("b_num"));
 		Board board = BoardDao.getBoardDao().getBoard(b_num);
 	%>
 	<div class="container">
@@ -24,7 +24,10 @@
 				<td>내용</td><td><%=board.getB_contents() %></td>
 			</tr>
 			<tr>
-				<td>첨부파일</td><td><a href="../../controller/filedowncontroller.jsp?file=<%=board.getB_file() %>"><%=board.getB_file() %></td>
+				<td>첨부파일1</td><td><a href="../../controller/filedowncontroller.jsp?file=<%=board.getB_file() %>"><%=board.getB_file() %></td>
+			</tr>
+			<tr>
+				<td>첨부파일2</td><td><a href="../../controller/filedowncontroller.jsp?file=<%=board.getB_file() %>"><%=board.getB_file() %></td>
 			</tr>
 		</table>
 	</div>

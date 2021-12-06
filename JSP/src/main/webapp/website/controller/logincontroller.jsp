@@ -32,7 +32,7 @@
 		else {
 			response.sendRedirect("../view/member/login.jsp?result=fail");
 		}
-		
+		 
 	%>
 </body>
 </html>
