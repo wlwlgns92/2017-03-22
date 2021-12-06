@@ -183,6 +183,23 @@
 						2. 서버폴더에 배치
 						3. 클라이언트는 서버 폴더내 파일만 요청/ 응답
 		
+		15. 서버폴더 경로 찾기/파일다운로드
+			- request.getSession.getServeltContent.getRealPath(경로명/파일명);
+			- 파일명의 경로찾기 
+			- 해당파일 객체화 [ File file = new File(경로/파일명) : 해당파일이 객체화
+				1. 파일을 바이트형으로 변환 [ 스트림 ] 
+				2. 객체화시 좋은점 : 다양한 메소드 제공
+			- 다운로드 형식 response.setHeader("Content-Disposition" ,"attachment;filename="+파일명+";" );
+			- 전송방식
+				1. 서버가 해당 파일을 바이트형으로 읽어온다.  
+					- BufferedInputStream 객체명 = new BufferedInputStream(new FileInputStream(파일객체));
+					- 객체명.read(배열명);
+				2. 서버가 읽어온 파일의 바이트를 클라이언트에게 응답 [ 전송 ]
+					- BufferedOutputStream 객체명 = new BufferedOutputStream(response.getOutputStream());
+					- 객체명.write
+				3. 스트림 종료/초기화
+					- 입력/아웃 스트림객체.close();
+			
 				
 				
 			

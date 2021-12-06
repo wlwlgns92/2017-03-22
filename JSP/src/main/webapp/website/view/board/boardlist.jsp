@@ -1,3 +1,4 @@
+
 <%@page import="dao.BoardDao"%>
 <%@page import="dto.Board"%>
 <%@page import="java.util.ArrayList"%>
@@ -23,12 +24,14 @@
 				<th>작성일</th>
 				<th>조회수</th>	
 			</tr>
-			<% ArrayList<Board> boards = BoardDao.getBoardDao().boardlist();
+			<% 
+				ArrayList<Board> boards = BoardDao.getBoardDao().boardlist();
+			
 				for(Board board : boards) { 
 			%>
 				<tr>
 				<td><%=board.getB_num() %></td>
-				<td><%=board.getB_title() %></td>
+				<td><a href="boardview.jsp?b_num=<%=board.getB_title() %>"><%=board.getB_title() %> </a></td>
 				<td><%=board.getM_num() %></td>
 				<td><%=board.getB_date() %></td>
 				<td><%=board.getB_view()%></td>
