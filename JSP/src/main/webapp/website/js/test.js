@@ -25,7 +25,7 @@
 		var colorname = document.getElementById("color");
 		colorname.textContent = color[0];
 		colorname.style.color = color[0]; // 태그명.style.속성명
-		
+		 
 		
 		var colors = color.length;
 		var colorlength = document.getElementById("colors");

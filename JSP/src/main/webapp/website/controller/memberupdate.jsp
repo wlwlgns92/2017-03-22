@@ -26,7 +26,7 @@
 			out.print("1");
 		}else{
 			out.print("0");
-		}
+		} 
 	}
 	
  

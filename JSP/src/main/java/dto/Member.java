@@ -25,7 +25,7 @@ public class Member {
 		this.m_name = m_name;
 		this.m_birth = m_birth;
 		this.m_sex = m_sex;
-		this.m_phone = m_phone;
+		this.m_phone = m_phone; 
 		this.m_address = m_address;
 		this.m_point = m_point;
 		this.m_sdate = m_sdate;

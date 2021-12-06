@@ -26,7 +26,7 @@
 			<tr>
 				<td>첨부파일1</td><td><a href="../../controller/filedowncontroller.jsp?file=<%=board.getB_file() %>"><%=board.getB_file() %></td>
 			</tr>
-			<tr>
+			<tr> 
 				<td>첨부파일2</td><td><a href="../../controller/filedowncontroller.jsp?file=<%=board.getB_file() %>"><%=board.getB_file() %></td>
 			</tr>
 		</table>

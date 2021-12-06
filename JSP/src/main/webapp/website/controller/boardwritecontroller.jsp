@@ -19,7 +19,7 @@
 		String title = multi.getParameter("title");
 		String contents = multi.getParameter("contents");
 		String file = multi.getFilesystemName("file");
-		
+		 
 		// 요청 [ 일반 form ]
 		/* String title = request.getParameter("title");
 		String contents = request.getParameter("contents");

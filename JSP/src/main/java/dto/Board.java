@@ -14,7 +14,7 @@ public class Board {
 	// 깡통
 	public Board() {
 	
-	}
+	} 
 	
 	// 전체
 	public Board(int b_num, String b_title, String b_contents, int m_num, String b_date, String b_file, int b_view,

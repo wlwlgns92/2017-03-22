@@ -20,6 +20,6 @@
 				<input type="submit" value="등 록"><br>
 			</form>
 		</div>
- 
+   
 </body>
 </html>

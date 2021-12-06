@@ -26,7 +26,7 @@
 			</tr>
 			<% 
 				ArrayList<Board> boards = BoardDao.getBoardDao().boardlist();
-			
+			 
 				for(Board board : boards) { 
 			%>
 				<tr>

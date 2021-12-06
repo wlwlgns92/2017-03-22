@@ -21,7 +21,7 @@ public class MemberDao {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jsp?serverTimezone=UTC", "root","1234");
 		
-		}
+		} 
 		catch (Exception e) {	System.out.println("연동 실패"+e);	}
 	}
 	public static MemberDao memberDao = new MemberDao();
