@@ -2,7 +2,7 @@ package dto;
 
 public class Member {
 
-	private int m_num ;
+	private int m_num;
 	private String m_id;
 	private String m_password;
 	private String m_name;

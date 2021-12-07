@@ -1,16 +1,23 @@
 package dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import dao.MemberDao;
+
 public class Board {
 	
 	private int b_num;
 	private String b_title;
 	private String b_contents;
 	private int m_num;
+	
 	private String b_date;
+	
 	private String b_file;
 	private int b_view;
 	private int b_activation;
-	
+	private String b_writer;
 	// 깡통
 	public Board() {
 	
@@ -23,10 +30,21 @@ public class Board {
 		this.b_title = b_title;
 		this.b_contents = b_contents;
 		this.m_num = m_num;
-		this.b_date = b_date;
+		Date today = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("hh : mm");
+		try {
+			Date date = dateFormat.parse(b_date);
+			this.b_date = dateFormat.format(date);
+			if(this.b_date.equals(dateFormat.format(today))) {
+				this.b_date = dateFormat2.format(today);
+			}
+		}
+		catch (Exception e) {}
 		this.b_file = b_file;
 		this.b_view = b_view;
 		this.b_activation = b_activation;
+		this.b_writer = MemberDao.getMemberDao().getmemberid(m_num);
 	}
 
 	// 등록시 생성자 ( 필요시 수정 ) 
@@ -99,6 +117,14 @@ public class Board {
 
 	public void setB_activation(int b_activation) {
 		this.b_activation = b_activation;
+	}
+
+	public String getB_writer() {
+		return b_writer;
+	}
+
+	public void setB_writer(String b_writer) {
+		this.b_writer = b_writer;
 	}
 	
 	

@@ -12,14 +12,20 @@
 		// 2. cos.jar 추가
 		// 3. MultipartRequest 객체명 = new MultipartRequest(요청방식[request], 업로드 폴더경로, 용량(바이트), 인코딩타입, 보안[new DefaultFileRenamePolicy()] )
 		//String folderpath = "D:/조지훈/JSP/src/main/webapp/website/upload";
-		String folderpath = request.getSession().getServletContext().getRealPath("website/upload");
+		String folderpath = "C:/Users/505/git/2017-03-22/JSP/src/main/webapp/website/upload";
 		MultipartRequest multi = new MultipartRequest( request, folderpath ,1024*1024*10,"UTF-8",new DefaultFileRenamePolicy() );
-		request.setCharacterEncoding("UTF-8");
 		
+		
+		request.setCharacterEncoding("UTF-8");
 		String title = multi.getParameter("title");
 		String contents = multi.getParameter("contents");
 		String file = multi.getFilesystemName("file");
-		 
+		
+		// <br> , 프론트 <> 태그 제거
+		//contents = contents.replace("\r\n", "<br>");
+		contents = contents.replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>");
+		title = title.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\S)*(/)?","");
+		
 		// 요청 [ 일반 form ]
 		/* String title = request.getParameter("title");
 		String contents = request.getParameter("contents");

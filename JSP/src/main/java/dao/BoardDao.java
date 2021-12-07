@@ -85,6 +85,17 @@ public class BoardDao {
 		
 		return null;
 	}
+	
+	public boolean boardcount(int b_num) {
+		
+		String sql = "update from set b_view = b_view +1 where b_num = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, b_num);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {} return false;
+	}
 	// 게시물 수정 메소드
 	
 	// 게시물 삭제 메소드
