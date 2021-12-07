@@ -54,6 +54,14 @@ public class Board {
 		this.m_num = m_num;
 		this.b_file = b_file;
 	}
+	
+	// 게시물 수정시 생성자
+	public Board(int b_num, String b_title, String b_contents, String b_file) {
+		this.b_num = b_num;
+		this.b_title = b_title;
+		this.b_contents = b_contents;
+		this.b_file = b_file;
+	}
 
 	public int getB_num() {
 		return b_num;

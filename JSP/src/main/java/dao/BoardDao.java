@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import dto.Board;
+import dto.Reply;
 
 public class BoardDao {
 	
@@ -39,7 +40,7 @@ public class BoardDao {
 			ps.setString(4, board.getB_file());
 			ps.executeUpdate();
 			return true;
-		} catch (Exception e) {System.out.println(e);} return false;
+		} catch (Exception e) {} return false;
 		
 	}
 	// 모든 게시물 출력
@@ -88,7 +89,7 @@ public class BoardDao {
 	
 	public boolean boardcount(int b_num) {
 		
-		String sql = "update from set b_view = b_view +1 where b_num = ?";
+		String sql = "update board set b_view = b_view +1 where b_num = ?";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, b_num);
@@ -97,11 +98,65 @@ public class BoardDao {
 		} catch (Exception e) {} return false;
 	}
 	// 게시물 수정 메소드
+	public boolean update(Board board) {
+		
+		String sql = "update board set b_title = ?,  b_contents = ?, b_file = ? where b_num =?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, board.getB_title());
+			ps.setString(2, board.getB_contents());
+			ps.setString(3, board.getB_file());
+			ps.setInt(4, board.getB_num());
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {} return false;
+	}
 	
 	// 게시물 삭제 메소드
+	public boolean delete(int b_num) {
+		
+		String sql = "delete from board where b_num = ?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, b_num);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {} return false;
+	}
 	
 	// 게시물 조회 메소드
 	
+	// 댓글 작성
+	public boolean replywrite (Reply reply) {
+		
+		String sql = "insert * into reply(r_contents, m_num, b_num) values(?,?,?)";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, reply.getR_contents());
+			ps.setInt(2, reply.getM_num());
+			ps.setInt(3, reply.getB_num());
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {} return false;
+		
+	}
 	
+	// 게시물번호의 해당 댓글 가져오기
+		public Reply getreply(int b_num) {
+			
+			String sql = "select * from reply where b_num = ?";
+			try {
+				ps = con.prepareStatement(sql);
+				ps.setInt(1, b_num);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					Reply reply = new Reply(rs.getInt(1), rs.getString(2), rs.getString(3),
+							rs.getInt(4), rs.getInt(5));
+					return reply;
+				}
+			} catch (Exception e) {}
+			
+			return null;
+		}
 	
 }

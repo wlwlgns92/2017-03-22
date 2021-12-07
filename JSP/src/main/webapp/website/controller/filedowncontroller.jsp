@@ -10,11 +10,11 @@
 	// 파일이름 요청
 	request.setCharacterEncoding("UTF-8");	
 	String filename = request.getParameter("file");
-//	String folderpath = request.getSession().getServletContext().getRealPath("website/upload/"+filename);
+	String folderpath = request.getSession().getServletContext().getRealPath("website/upload/"+filename);
 						// request.getSession().getServletContext().getRealPath("website/upload"+filename); 서버내 경로찾기
 						
 	// 작업 폴더
-	String folderpath = "C:/Users/505/git/2017-03-22/JSP/src/main/webapp/website/upload"+filename;
+	//String folderpath = "C:/Users/505/git/2017-03-22/JSP/src/main/webapp/website/upload"+filename;
 	// 서버내 업로드 폴더내 파일 찾아서 파일 객체화
 	File file = new File(folderpath);
 	// 다운로드 형식 변경
