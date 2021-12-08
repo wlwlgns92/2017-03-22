@@ -12,6 +12,41 @@
 </head>
 <body>
 		<%@include file= "../header.jsp" %>
+		
+		<%
+		//페이징 처리
+		int lastrow = BoardDao.getBoardDao().boardcount();
+		int listsize = 10;
+		int lastpage = 0;					//마지막 페이지
+		if(lastrow % listsize == 0) {		//만약에 나머지가 없다면
+			lastpage = lastrow / listsize;		//총 게시물/페이지당게시물
+		}else {
+			lastpage = lastrow / listsize+1; //총 게시물/페이지당게시물 +1
+		}
+		
+		String pagenum = request.getParameter("pagenum"); // 클릭한 페이지번호 요청
+		if(pagenum == null) { // 클릭한 페이지번호가 없으면
+			pagenum = "1"; // 1페이지
+		}	
+		// 현재페이지번호
+		int currentpage = Integer.parseInt(pagenum);
+		int startrow = (currentpage-1)*listsize; // 현재페이지의 시작번호
+					// 1페이지 0*10 -> 0,		// 2페이지 1*10 -> 10,			// 3페이지 2*10 -> 20
+		int endrow = currentpage*listsize;			
+		// 현재페이지의 시작번호
+		// 현재페이지의 마지막번호
+		
+		//검색이 있을경우 
+		ArrayList<Board> boards = null;
+		String key = request.getParameter("key");
+		String keyword = request.getParameter("keyword");
+		if(key != null && keyword !=null) { // 검색이 있을경우는 key와 keyword가 입력했을때
+			boards = BoardDao.getBoardDao().boardlist2(key, keyword);
+		}else {
+			boards = BoardDao.getBoardDao().boardlist(startrow, listsize);
+		}
+		
+		%>
 	<!-- 고객센터 -->	
 	<div class="container">
 		<a href="boardwrite.jsp"><button >글쓰기</button></a>
@@ -47,33 +82,69 @@
 				<th>작성일</th>
 				<th>조회수</th>	
 			</tr>
-			<% 
-				ArrayList<Board> boards = BoardDao.getBoardDao().boardlist();
-			 
-				for(Board board : boards) { 
-			%>
-				<tr>
-				<td><%=board.getB_num() %></td>
-				<td><a href="boardview.jsp?b_num=<%=board.getB_num() %>"class="text-dark"><%=board.getB_title() %> </a></td>
-				<td><%=board.getB_writer() %></td>
-				<td><%=board.getB_date() %></td>
-				<td><%=board.getB_view()%></td>
-				</tr>
-			<%
-				}
-			%>
+				<%if( boards.size() == 0) { %>
+					<tr>
+						<td colspan="5" style="text-align: center;">검색 결과가 없습니다. </td>
+					</tr>
+				<%} %>
+			<% 	for(Board board : boards) { %>
+					<tr>
+					<td><%=board.getB_num() %></td>
+					<td><a href="boardview.jsp?b_num=<%=board.getB_num() %>"class="text-dark"><%=board.getB_title() %> </a></td>
+					<td><%=board.getB_writer() %></td>
+					<td><%=board.getB_date() %></td>
+					<td><%=board.getB_view()%></td>
+					</tr>
+			<%}%>
 		</table>
-		<%
-		if(loginid != null && loginid.equals("admin")) {
-		%>
 		
+		<%	if(loginid != null) {%>
 		<div class="row">
 			<div class="col-md-2 offset-10">
 				<a href="boardwrite.jsp"><button type="button" class="btn btn-outline-dark">글쓰기</button></a>
 			</div>
 		</div>
-		<%} %>
+		<%}else { %>
+		<div class="col-md-3 offset-9" >
+			* 로그인후에 글 등록 가능 합니다.
+		</div>
+		<%}%>
+		
 	</div>
-
+		<!-- 페이징 번호 -->
+		<div class="row">
+			<div class="col-md-4 offset-4 my-3">
+				<ul class="pagination">
+					<!--  첫 페이지이면 이전페이지 누르면 첫페이지 고정 -->
+					<%if(currentpage == 1) { %>
+					<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage %>" class="page-link"> 이전 </a> </li>
+					<%}else { %>
+					<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage-1 %>" class="page-link"> 이전 </a> </li>
+					<%}%>
+					<!-- 게시물의 수만큼 페이지 생성 -->
+					<% for(int i = 1; i <= lastpage; i++) { %>
+					<li class="page-item"><a href="boardlist.jsp?pagenum=<%=i %>" class="page-link"> <%=i %> </a> </li> <!-- i를 클릭했을때 현재 페이지 이동 [ 클릭한 페이지와 같이] -->
+					<%} %>
+					<!-- 마지막페이지에서 다음버튼 눌렀을때 마지막페이지 고정 -->
+					<%if(currentpage == lastpage) {%>
+					<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage %>" class="page-link"> 다음 </a> </li>
+					<%}else { %>
+					<li class="page-item"><a href="boardlist.jsp?pagenum=<%=currentpage+1 %>" class="page-link"> 다음 </a> </li>
+					<%} %>
+				</ul>
+			</div>
+			<!-- 검색 -->
+			<form action="boardlist.jsp" method="get" class="col-md-5 offset-3 input-group my-3"> 
+				<select class="custom-select col-cmd-3" name="key"> <!-- key에는 필드명 -->
+					<option value="b_title">제목</option> <!-- value는 key값 [ db의 컬럼 ] -->
+					<option value="b_contents">내용</option>
+					<option value="b_num">번호</option>
+					<option value="b_writer">작성자</option>
+				</select>
+				<input type="text" class="form-control" name="keyword"> <!-- keyword : 검색대상 -->
+				<input type="submit" class="btn-outline-info" value="검색"> 
+			</form>
+			
+		</div>
 </body>
 </html>

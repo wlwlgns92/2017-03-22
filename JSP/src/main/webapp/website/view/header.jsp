@@ -37,7 +37,7 @@
 				<header class="py-3">	<!-- p : 안쪽여백  // m : 바깥여백	// y : 위아래 , x : 왼쪽오른쪽 -->
 					<div class="row">	<!-- 가로배치 -->
 						<div class="col-md-4 offset-4 text-center"> <!-- 로고[웹사이트명] -->
-							 <a href="/jsp/website/view/main.jsp" class="header_logo">SUPER CAR SHOP </a> 
+							 <a href="main.jsp" class="header_logo">SUPER CAR SHOP </a> 
 						</div>
 						<div class="col-md-4 d-flex justify-content-end">	<!-- 상단 메뉴 -->
 							<ul class="nav">

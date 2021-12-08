@@ -44,10 +44,10 @@ public class BoardDao {
 		
 	}
 	// 모든 게시물 출력
-	public ArrayList<Board> boardlist() {
+	public ArrayList<Board> boardlist(int startrow , int listsize) {
 		
 		ArrayList<Board> boards = new ArrayList<Board>();
-		String sql = "select * from board order by b_num DESC";
+		String sql = "select * from board order by b_num DESC limit "+startrow+","+listsize; // limit 검색 개수 제한
 		try {
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -63,9 +63,39 @@ public class BoardDao {
 			return boards;
 		} catch (Exception e) { System.out.println(e);} 
 		return null;
-		
 	}
 	
+	// 게시물 검색 메소드 [ 포함된 값을 찾는 검색 ]
+	public ArrayList<Board> boardlist2(String key, String keyword) {
+		
+		ArrayList<Board> boards = new ArrayList<Board>();
+		String sql =null;
+		if(key.equals("b_writer")) { // 제목 or 내용 검색 : 포함된 값 검색
+			int m_num = MemberDao.getMemberDao().getmembernum(keyword);
+			sql = "select * from board where m_num = "+ m_num;
+		}else if (key.equals("b_num")) { // 번호검색 : 일치한 값만 검색
+			sql = "select * from board where b_num = "+ keyword; 
+		}else { // 작성자 검색 : 작성자 -> 회원번호
+			
+			sql = "select * from board where "+key+" like '%"+keyword+"%' order by b_num desc"; 
+		}
+		
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Board board = new Board(rs.getInt(1), 
+						rs.getString(2), 
+						rs.getString(3),
+						rs.getInt(4),
+						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
+				boards.add(board);	
+			}
+			System.out.println(boards.toString());
+			return boards;
+		} catch (Exception e) { System.out.println(e);} 
+		return null;
+	}
 	// 게시물번호의 해당 게시물 가져오기
 	public Board getBoard(int b_num) {
 		
@@ -158,5 +188,15 @@ public class BoardDao {
 			
 			return null;
 		}
-	
+	// 게시물의 총 개수를 반환해주는 메소드
+		public int boardcount() {
+			
+			String sql = "select count(*) from board "; // count(*) : 개수 함수 : count(*)와일드카드 개수
+			
+			try {
+				ps = con.prepareStatement(sql);
+				rs = ps.executeQuery();
+				if(rs.next()) {	return rs.getInt(1); }
+			} catch (Exception e) {} return 0;
+		}
 }
