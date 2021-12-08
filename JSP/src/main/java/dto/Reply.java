@@ -38,7 +38,7 @@ public class Reply {
 	}
 	
 	
-	
+	// 댓글 저장
 	public Reply(String r_contents, int m_num, int b_num) {
 		this.r_contents = r_contents;
 		this.m_num = m_num;

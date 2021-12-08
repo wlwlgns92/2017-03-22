@@ -44,44 +44,32 @@ public class BoardDao {
 		
 	}
 	// 모든 게시물 출력
-	public ArrayList<Board> boardlist(int startrow , int listsize) {
-		
-		ArrayList<Board> boards = new ArrayList<Board>();
-		String sql = "select * from board order by b_num DESC limit "+startrow+","+listsize; // limit 검색 개수 제한
-		try {
-			ps = con.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while(rs.next()) {
-				Board board = new Board(rs.getInt(1), 
-						rs.getString(2), 
-						rs.getString(3),
-						rs.getInt(4),
-						rs.getString(5), rs.getString(6), rs.getInt(7), rs.getInt(8));
-				boards.add(board);	
-			}
-			System.out.println(boards.toString());
-			return boards;
-		} catch (Exception e) { System.out.println(e);} 
-		return null;
-	}
+	
 	
 	// 게시물 검색 메소드 [ 포함된 값을 찾는 검색 ]
-	public ArrayList<Board> boardlist2(String key, String keyword) {
+	public ArrayList<Board> boardlist(int startrow, int listsize, String key, String keyword) {
 		
 		ArrayList<Board> boards = new ArrayList<Board>();
 		String sql =null;
-		if(key.equals("b_writer")) { // 제목 or 내용 검색 : 포함된 값 검색
-			int m_num = MemberDao.getMemberDao().getmembernum(keyword);
-			sql = "select * from board where m_num = "+ m_num;
-		}else if (key.equals("b_num")) { // 번호검색 : 일치한 값만 검색
-			sql = "select * from board where b_num = "+ keyword; 
-		}else { // 작성자 검색 : 작성자 -> 회원번호
-			
-			sql = "select * from board where "+key+" like '%"+keyword+"%' order by b_num desc"; 
-		}
+		if(key == null && keyword == null) { // 검색이 없을경우 
+			sql = "select * from board order by b_num DESC limit ? , ?"; // limit 검색 개수 제한
+		}else {
 		
+			if(key.equals("b_writer")) { // 제목 or 내용 검색 : 포함된 값 검색
+				int m_num = MemberDao.getMemberDao().getmembernum(keyword);
+				
+				sql = "select * from board where m_num = "+ m_num +" order by b_num desc limit ? , ?";
+			}else if (key.equals("b_num")) { // 번호검색 : 일치한 값만 검색
+				System.out.print(keyword);
+				sql = "select * from board where b_num = "+ keyword+" order by b_num desc limit ? , ?";
+			}else { // 작성자 검색 : 작성자 -> 회원번호
+				sql = "select * from board where "+key+" like '%"+keyword+"%' order by b_num desc limit ? , ?"; 
+			}
+		
+		}
 		try {
 			ps = con.prepareStatement(sql);
+			ps.setInt(1, startrow); ps.setInt(2, listsize);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				Board board = new Board(rs.getInt(1), 
@@ -116,7 +104,7 @@ public class BoardDao {
 		
 		return null;
 	}
-	
+	// view 증가
 	public boolean boardcount(int b_num) {
 		
 		String sql = "update board set b_view = b_view +1 where b_num = ?";
@@ -159,7 +147,7 @@ public class BoardDao {
 	// 댓글 작성
 	public boolean replywrite (Reply reply) {
 		
-		String sql = "insert * into reply(r_contents, m_num, b_num) values(?,?,?)";
+		String sql = "insert into reply(r_contents, m_num, b_num) values(?,?,?)";
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setString(1, reply.getR_contents());
@@ -189,14 +177,76 @@ public class BoardDao {
 			return null;
 		}
 	// 게시물의 총 개수를 반환해주는 메소드
-		public int boardcount() {
-			
-			String sql = "select count(*) from board "; // count(*) : 개수 함수 : count(*)와일드카드 개수
-			
+		public int boardcount(String key, String keyword) {
+			String sql = null;
+			if(key != null && keyword != null) {
+				if(key.equals("b_writer")) { // 제목 or 내용 검색 : 포함된 값 검색
+					int m_num = MemberDao.getMemberDao().getmembernum(keyword);
+					sql = "select count(*) from board where m_num = "+ m_num;
+				}else if (key.equals("b_num")) { // 번호검색 : 일치한 값만 검색
+					sql = "select count(*) from board where b_num = "+ keyword; 
+				}else { // 작성자 검색 : 작성자 -> 회원번호
+					sql = "select count(*) from board where "+key+" like '%"+keyword+"%'"; 
+				}
+			}else {
+			sql = "select count(*) from board "; // count(*) : 개수 함수 : count(*)와일드카드 개수
+			}
 			try {
 				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 				if(rs.next()) {	return rs.getInt(1); }
 			} catch (Exception e) {} return 0;
 		}
+		
+		//모든 댓글 가져오기
+	public ArrayList<Reply> replylist(int b_num) {
+		ArrayList<Reply> replys = new ArrayList<Reply>();
+		String sql = "select * from reply where b_num=?";
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, b_num);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Reply reply = new Reply(rs.getInt(1), rs.getString(2), rs.getString(3),
+						rs.getInt(4), rs.getInt(5));
+				replys.add(reply);
+			}
+			return replys;
+		} catch (Exception e) {System.out.println(e);} return null;
+		
+	}
+	
+	public boolean replydelete(int r_num) {
+		
+		String sql = "delete from reply where r_num = ?";
+		try {
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, r_num);
+			ps.executeUpdate();
+			return true;
+		} catch (Exception e) {}return false;
+	}
+	
+	// 리플의 총 개수를 반환해주는 메소드
+			public int replycount(String key, String keyword) {
+				String sql = null;
+				if(key != null && keyword != null) {
+					if(key.equals("b_writer")) { // 제목 or 내용 검색 : 포함된 값 검색
+						int m_num = MemberDao.getMemberDao().getmembernum(keyword);
+						sql = "select count(*) from board where m_num = "+ m_num;
+					}else if (key.equals("b_num")) { // 번호검색 : 일치한 값만 검색
+						sql = "select count(*) from board where b_num = "+ keyword; 
+					}else { // 작성자 검색 : 작성자 -> 회원번호
+						sql = "select count(*) from board where "+key+" like '%"+keyword+"%'"; 
+					}
+				}else {
+				sql = "select count(*) from board "; // count(*) : 개수 함수 : count(*)와일드카드 개수
+				}
+				try {
+					ps = con.prepareStatement(sql);
+					rs = ps.executeQuery();
+					if(rs.next()) {	return rs.getInt(1); }
+				} catch (Exception e) {} return 0;
+			}
+			
 }

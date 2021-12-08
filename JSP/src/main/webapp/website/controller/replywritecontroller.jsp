@@ -10,6 +10,7 @@
     request.setCharacterEncoding("UTF-8");
     String contents = request.getParameter("contents");
     int b_num = Integer.parseInt(request.getParameter("b_num"));
+   
     
     contents = contents.replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("\n","<br>");
     

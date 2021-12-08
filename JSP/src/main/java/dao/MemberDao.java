@@ -22,7 +22,7 @@ public class MemberDao {
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/jsp?serverTimezone=UTC", "root","1234");
 		
 		} 
-		catch (Exception e) {	System.out.println("연동 실패"+e);	}
+		catch (Exception e) {}
 	}
 	public static MemberDao memberDao = new MemberDao();
 	public static MemberDao getMemberDao() { return memberDao; }
@@ -44,7 +44,7 @@ public class MemberDao {
 			ps.setString(7, member.getM_address());
 			ps.executeUpdate();
 			return true;
-		} catch (Exception e) {System.out.println(e);} return false;
+		} catch (Exception e) {} return false;
 	}
 	
 	public boolean logincheck(String id, String password) {
@@ -91,7 +91,7 @@ public class MemberDao {
 						ps2.setString(2, password);
 						ps2.executeUpdate(); return true;
 					}
-			}catch (Exception e) { System.out.println(e);  } return false;
+			}catch (Exception e) {  } return false;
 		}
 		// 회원 정보 출력 메소드
 		public Member getmember( String id ) {

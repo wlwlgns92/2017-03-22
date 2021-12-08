@@ -29,6 +29,14 @@
 		}
 		// 해당 게시물 번호의 게시물 가져오기
 		Board board = BoardDao.getBoardDao().getBoard(b_num);
+		Reply replyes = BoardDao.getBoardDao().getreply(b_num);
+		
+		//페이징
+		String pagenum = request.getParameter("pagenum");
+		if(pagenum == null){
+			pagenum = "1";
+		}
+		int lastrow = BoardDao.getBoardDao().reply
 	%>
 	<div class="container">
 			<div class="row">
@@ -67,9 +75,10 @@
 			</tr>
 		</table>
 	</div>
-		<% Reply reply = BoardDao.getBoardDao().getreply(b_num);  %>
-			<form action="../../controller/replywritecontroller.jsp?b_num=<%=board.getB_num() %>" class="row" method="get">
-			
+		
+		
+			<form action="../../controller/replywritecontroller.jsp" class="row" method="get">
+				<input type="hidden" value="<%=board.getB_num() %>" name="b_num">
 				<div class="col-md-2" >
 					<h6>댓글작성 </h6>
 				</div>
@@ -85,10 +94,26 @@
 				<tr>
 					<th> 작성자 </th> <th> 내용 </th> <th> 작성일 </th>
 				</tr>
-				<tr><th> </th> <th> 안녕하세요~~~~~~ </th> <th> 2021-12-07 </th><th><button class="form-control">삭제</button></tr>
-				<tr><th> qweqwe </th> <th> 안녕하세요~~~~~~ </th> <th> 2021-12-07 </th><th><button class="form-control">삭제</button></tr>
-				<tr><th> qweqwe </th> <th> 안녕하세요~~~~~~ </th> <th> 2021-12-07 </th><th><button class="form-control">삭제</button></tr>
+				<%// 해당 게시물 번호의 모든 댓글 가져오기
+				ArrayList<Reply> replys = BoardDao.getBoardDao().replylist(b_num); %>
+				<% for(Reply reply : replys) { %>
+				<tr><th> <%=reply.getR_writer() %> </th> <th> <%=reply.getR_contents() %> </th> <th> <%=reply.getR_date() %> </th> 
+				<th><a href="../../controller/replydeletecontroller.jsp?r_num=<%=reply.getR_num() %>&b_num=<%=b_num %>">
+					<button class="form-control"> 삭제</button>
+				</a></tr>
+							
+				<%} %>
 			</table>
+			<div class="row">
+				<div class="col-md-4 offset-4 my-3">
+					<ul class="pagination">
+						<li class="page-item"><a href="boardview.jsp?pagenum=<%=currentpage %>" class="page-link">이전 </a> </li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</div>
+			</div>
 
 </body>
 </html>
