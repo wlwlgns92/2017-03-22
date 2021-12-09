@@ -228,3 +228,33 @@
 	
 	
 	/* 회원가입 유효성 검사  end*/
+	
+	function activeupdate(p_num){
+		
+		if(confirm("상태변경하시겠습니까?") == true){
+			//동기식
+			//location.href('../../controller/productactivecontroller.jsp?p_num='+p_num);
+			
+			// 비동기식
+			$(function() {
+				$.ajax({ 
+					url : "../../controller/productactivecontroller.jsp",
+					data : {p_num : p_num},
+					success : function(result) {
+						if(result == 1) { // js 자료형이 없음 
+							// 현재 페이지 초기화
+							location.reload();  // jquery 메소드
+						}else {
+							alert("변경실패");
+						}
+					}
+					
+					
+				})
+				
+			});
+		} 
+		
+	}
+	
+	

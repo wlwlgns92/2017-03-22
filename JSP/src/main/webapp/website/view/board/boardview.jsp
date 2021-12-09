@@ -36,7 +36,7 @@
 		if(pagenum == null){
 			pagenum = "1";
 		}
-		int lastrow = BoardDao.getBoardDao().reply
+//		int lastrow = BoardDao.getBoardDao().reply
 	%>
 	<div class="container">
 			<div class="row">
@@ -104,16 +104,7 @@
 							
 				<%} %>
 			</table>
-			<div class="row">
-				<div class="col-md-4 offset-4 my-3">
-					<ul class="pagination">
-						<li class="page-item"><a href="boardview.jsp?pagenum=<%=currentpage %>" class="page-link">이전 </a> </li>
-						<li></li>
-						<li></li>
-						<li></li>
-					</ul>
-				</div>
-			</div>
+			
 
 </body>
 </html>
