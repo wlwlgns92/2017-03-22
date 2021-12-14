@@ -37,7 +37,7 @@
 				</tr>
 				<%for(Product product : products) { %>
 					<tr>
-						<td width="200px;"><img src="../../upload/<%=product.getP_img()%>" style="max-width: 100%;"></td>
+						<td width="200px;"><a href="/JSP/website/view/product/productview.jsp?p_num=<%=product.getP_num()%>"> <img src="../../upload/<%=product.getP_img() %>" style="max-width: 100%;"></a></td>
 						<td><%=product.getP_num() %></td>
 						<td><%=product.getP_name() %></td>
 						<td><%=product.getP_price() %></td>

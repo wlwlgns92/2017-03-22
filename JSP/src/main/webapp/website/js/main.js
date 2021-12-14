@@ -257,4 +257,72 @@
 		
 	}
 	
+	/*제품 수량 변경 */
+	
+	function pchange(type , stock, price){ // 버튼 타입과 재고 인수로 받음
+		var p_count = document.getElementById("p_count").value*1;
+		
+		
+					// 현재수량 가져오기 // 문자열-> 숫자열 : *1
+		if( type =='m') { // - 버튼을 눌렀을때
+			p_count -= 1; // 현재수량 -1 
+			if(p_count < 1){ // 만약에 1보다 작아지면
+				alert("1개 이상 주문 가능합니다."); // 메시지 출력 
+				p_count = 1;
+			}
+		}else if(type=="p") { // + 버튼을 눌렀을때
+			p_count += 1; // 1증가
+			if(p_count > stock) { // 만약에 현재 수량이 재고보다 작다면
+				alert("재고가 부족합니다."); // 메시지 출력
+				p_count = stock;
+			}
+		}else { // 만약에 직접 수량을 변경 입력했을때
+			if(p_count > stock) { // 만약에 현재 수량이 재고보다 작다면
+				alert("재고가 부족합니다."); // 메시지 출력
+				p_count =1;
+			}
+			if(p_count < 1){ // 만약에 1보다 작아지면
+				alert("1개 이상 주문 가능합니다."); // 메시지 출력 
+				p_count = 1;
+			}
+		}
+		//현재 수량을 현재 수량 입력상자에 대입
+		document.getElementById("p_count").value = p_count;
+							// .value 속성태그 [ 입력상자 input ]
+		var totalprice = p_count*price; // 총가격 = 제품수량 * 가격
+		document.getElementById("total").innerHTML = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+							// .innerHTML 속성태그 [ div는 값이 없기때문에 바로 HTML로 들어간다. ]
+							 // replace(기존문자, 새로운문자);
+								// 정규표현식 : /\B(?=(\d{3})+(?!\d))/g
+									// 1. / : 시작
+									// 2. \B : 시작 끝 [ 예: 1234일경우 1, 4 ]
+									// 3. \ㅇ{3} : 숫자 길이 [ 예 : {3} : 숫자길이 123 ]
+									// 4. !\d : 뒤에 숫자 
+									// 5. /g : 전역 검색
+	}
+	/*제품 수량 변경 end*/
+	
+	/* 찜하기 */
+	function p_like(p_num, m_num) {
+		// 비동기식 통신 함수 ajax
+		if(m_num == 0) {alert("로그인 후 사용 가능합니다."); return; }
+		$(function() {
+			
+			$.ajax({
+				url: "../../controller/productlikecontroller.jsp",
+				data : {p_num : p_num, m_num : m_num },
+				success : function(result) {
+					if(result == 1) {
+						document.getElementById("btnplike").innerHTML = "찜하기♡";
+					}else if(result == 2){
+						document.getElementById("btnplike").innerHTML = "찜하기♥";
+					}
+					
+					alert(result);
+				}
+			});
+			
+		});
+	}
+	/* 찜하기 end*/
 	

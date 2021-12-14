@@ -31,7 +31,7 @@
 				<div class="carousel-item"> <img src="../img/tucson-n-line-21lc-main-w.jpg"> </div>
 			</div>
 			<!-- 케러셀 이미지 이동 버튼 -->
-			<a class="carousel-control-prev" href="#carouselcontent" data-slide="prov" >
+			<a class="carousel-control-prev" href="#carouselcontent" data-slide="prev" >
 				<span class="carousel-control-prev-icon"></span>
 			</a>
 			<a class="carousel-control-next" href="#carouselcontent" data-slide="next" >
@@ -59,7 +59,7 @@
 	 		%>
 	 			<div class="col-md-4">
 	 				<div class="card">
-	 					<a href="product/productactive.jsp?p_num=<%=product.getP_num() %>"> <img class="card-img-top pimg" src="../upload/<%=product.getP_img() %>"> </a> 
+	 					<a href="product/productview.jsp?p_num=<%=product.getP_num() %>"> <img class="card-img-top pimg" src="../upload/<%=product.getP_img() %>"> </a> 
 	 					<div class="card-body">
 	 						<p class="card-text"> <%=product.getP_name() %> </p>
 	 						<hr>

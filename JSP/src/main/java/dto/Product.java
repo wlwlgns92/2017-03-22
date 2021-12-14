@@ -21,7 +21,7 @@ public class Product {
 			 DecimalFormat decimalFormat = new DecimalFormat("###,###");
 			 return decimalFormat.format(this.p_price);
 		 }
-		 
+ 
 		 // 제품상태 int String으로 바꾸기
 		 public String getactive() {
 			 if(this.p_active == 1) { return "준비중"; }
