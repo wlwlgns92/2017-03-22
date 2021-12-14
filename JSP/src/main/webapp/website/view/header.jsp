@@ -9,7 +9,7 @@
 	<!-- 부트스트랩 설정 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<!-- 본인 css 호출 -->
-	<link rel="stylesheet" href="/jsp/website/view/css/main.css">
+	<link rel="stylesheet" href="/JSP/website/css/main.css">
 </head>
 <body>
 	<!-- 부트스트랩 js 설정 -->

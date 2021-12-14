@@ -326,3 +326,86 @@
 	}
 	/* 찜하기 end*/
 	
+	/* 장바구니 */
+	function cartadd(){
+		// 제이쿼리를 이용한 값 가져오기
+		// 1. id속성 이용
+	/*	var p_num2 = $("#p_num").val(); 
+		// 2. name속성 이용
+		var p_num3 = $("input[name=p_num]").val(); 
+		// 3. class 속성 이용
+		var p_num4 = $(".p_num").val(); 
+		
+		// 자바스크립트를 이용한 값 가져오기
+			// 1. id 속성 이용
+		var p_num = document.getElementById("p_num").value;
+			// 2. class= 속성 // class는 중복 허용하기 때문에 배열을 이용
+		var p_num5 = document.getElementsByClassName("p_num")[0].value;
+			// 3. name 속성 // name도 중복을 허용하기 때문에 배열을 이용
+		var p_num6 = document.getElementsByName("p_num")[0].value;
+	*/
+		var p_num = document.getElementById("p_num").value;   
+		var p_size = document.getElementById("p_size").value;
+		if(p_size == 0) {
+			alert("옵션을 선택하세요 ");	return; 
+		}
+		var p_count = document.getElementById("p_count").value;
+		
+		// controller 페이지로 이동 
+			// 1. 하이퍼링크를 쓴다
+				/*
+				html : <a href="#"> </a>
+				js : location.href = "#"
+				jsp : response.sendredirect(#)
+				*/
+			// 2. ajax
+		//	location.href = "../../controller/productcartcontroller.jsp?p_num="+p_num+"&p_size="+p_size+"&p_count="+p_count;
+		
+		$.ajax({ // 페이지 전환 없음 [ 해당 페이지와 통신 ]
+			
+			url : "../../controller/productcartcontroller.jsp" ,
+			data : {p_num : p_num, p_size : p_size, p_count : p_count} ,
+			success : function(result) {
+				if(confirm("장바구니에 담았습니다. [장바구니로 이동하시겠습니까 ?]") == true ) {
+					location.href="productcart.jsp"
+				}
+			}
+		});
+	}
+	
+	/* 장바구니 end*/
+	
+	
+	/* 장바구니 모두 삭제 */
+	function cartdelete(type, p_num, p_size){
+		
+		
+		$.ajax({ // 페이지 전환 없음 [ 해당 페이지와 통신 ]
+			
+			url : "../../controller/productcartdeletecontroller.jsp" ,
+			data : {type : type, p_num : p_num, p_size : p_size} ,
+			success : function(result) {
+				location.reload();
+				
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
+	/* 장바구니 모두 삭제 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
