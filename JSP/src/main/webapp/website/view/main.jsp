@@ -39,9 +39,7 @@
 			</a>
 		</div>
 	<!-- 캐러셀 end -->
-		<%
-		MemberDao.getMemberDao();
-		%>
+	
 		
 		<!-- 구분선 -->
 		<hr>

@@ -27,3 +27,14 @@ pimg:hober {
 	font-size: 1rem;
 	
 }
+.carttotal{
+	 font-family: 'HSYuji-Regular';
+	 font-size: 1.5rem;
+}
+
+.totalbox {
+	
+	border: 3px solid #eeeeee;
+	margin: 30px;
+	padding: 40px;
+}

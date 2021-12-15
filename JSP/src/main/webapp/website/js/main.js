@@ -377,13 +377,13 @@
 	
 	
 	/* 장바구니 모두 삭제 */
-	function cartdelete(type, p_num, p_size){
+	function cartdelete( type, p_num, p_size){
 		
 		
 		$.ajax({ // 페이지 전환 없음 [ 해당 페이지와 통신 ]
 			
 			url : "../../controller/productcartdeletecontroller.jsp" ,
-			data : {type : type, p_num : p_num, p_size : p_size} ,
+			data : {type : type, p_num : p_num, p_size : p_size, i : -1, p_count : -1} ,
 			success : function(result) {
 				location.reload();
 				
@@ -399,10 +399,114 @@
 	/* 장바구니 모두 삭제 */
 	
 	
+	/*장바구니 수량 변경 */
 	
+	function pchange2(i, type, stock, price) {
+		
+		var p_count = document.getElementById("p_count"+i).value*1;
+		
+		if( type =='m') { // - 버튼을 눌렀을때
+			p_count -= 1; // 현재수량 -1 
+			if(p_count < 1){ // 만약에 1보다 작아지면
+				alert("1개 이상 주문 가능합니다."); // 메시지 출력 
+				p_count = 1;
+			}
+		}else if(type=="p") { // + 버튼을 눌렀을때
+			p_count += 1; // 1증가
+			if(p_count > stock) { // 만약에 현재 수량이 재고보다 작다면
+				alert("재고가 부족합니다."); // 메시지 출력
+				p_count = stock;
+			}
+		}else { // 만약에 직접 수량을 변경 입력했을때
+			if(p_count > stock) { // 만약에 현재 수량이 재고보다 작다면
+				alert("재고가 부족합니다."); // 메시지 출력
+				p_count =1;
+			}
+			if(p_count < 1){ // 만약에 1보다 작아지면
+				alert("1개 이상 주문 가능합니다."); // 메시지 출력 
+				p_count = 1;
+			}
+		}
+		//현재 수량을 현재 수량 입력상자에 대입
+		document.getElementById("p_count"+i).value = p_count;	
+		var totalprice = p_count*price; // 총가격 = 제품수량 * 가격
+		
+		$.ajax({ // 페이지 전환 없음 [ 해당 페이지와 통신 ]
+			
+			url : "../../controller/productcartdeletecontroller.jsp" ,
+			data : {type : type, p_num : -1, p_size : -1, i : i , p_count : p_count} ,
+			success : function(result) {
+				location.reload(); // 새로고침
+			}
+		});
 	
+	}
 	
+	/* 결제 API 아이엠포트 */
+	function payment() {
+		alert("ansdi");
+		var IMP = window.IMP;
+	    IMP.init("imp64853372"); // 관리자 식별코드
+		
+	// IMP.request_pay(param, callback) 결제창 호출
+     	  IMP.request_pay({ // param
+          pg: "html5_inicis",
+          pay_method: "card",
+          merchant_uid: "ORD20180131-0000011",
+          name: "아무거나", // 결제창에 나오는 결제 이름
+          amount: document.getElementById("totalprice").value*1 , // 결창에 나오는 가격
+          buyer_email: "gildong@gmail.com",
+          buyer_name: "홍길동",
+          buyer_tel: "010-4242-4242",
+          buyer_addr: "서울특별시 강남구 신사동",
+          buyer_postcode: "01181"
+
+      }, function (rsp) { // callback
+          if (rsp.success) {
+			// 결제 성공시
+          } else {
+			alert(rsp.error_msg);
+          }
+      });
+	}
+	/* 결제 API 아이엠포트 end*/
 	
+	/* 회원과 동일 체크 */
+	
+	// 체크 유무검사 [ jquery ]
+	//$(document).ready(function(){실행문 }); // 문서내에서 대기상태 메소드
+	$(document).ready(function(){ 
+		
+		$("#checkbox").change(function() {
+			// 체크박스가 체크가 되었는지 확인 = true
+				//.is 해당 태그에 속성 유무 확인 [":속성명""] 메소드
+			if($("#checkbox").is(":checked")){
+				$("#name").val( $("#mname").val() );
+				$("#phone").val( $("#mphone").val());
+			}else{
+				$("#name").val("");
+				$("#phone").val("");
+			}
+			
+			
+		});
+		$("#checkbox2").change(function() {
+			if($("#checkbox2").is(":checked")){
+				$("#sample4_postcode").val( $("#address1").val());
+				$("#sample4_roadAddress").val($("#address2").val());
+				$("#sample4_jibunAddress").val($("#address3").val());
+				$("#sample4_detailAddress").val($("#address4").val());
+			}else{
+				$("#sample4_postcode").val("");
+				$("#sample4_roadAddress").val("");
+				$("#sample4_jibunAddress").val("");
+				$("#sample4_detailAddress").val("");
+			}
+			
+			
+		});
+	}); 
+	/* 회원과 동일 체크 end */
 	
 	
 	
