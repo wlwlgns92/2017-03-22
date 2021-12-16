@@ -441,31 +441,65 @@
 		});
 	
 	}
+	/* 결제방식선택 */
+	
+	function paymentselect(payselect) {
+		
+		document.getElementById("payselect").innerHTML=payselect;
+		
+		
+	}
+	
+	/* 결제방식선택 end*/
 	
 	/* 결제 API 아이엠포트 */
 	function payment() {
-		alert("ansdi");
+		
+		if( document.getElementById("payselect").innerHTML == "") {
+			alert("결제방식을 선택해 주세요");
+			retrun;
+		}
 		var IMP = window.IMP;
 	    IMP.init("imp64853372"); // 관리자 식별코드
 		
 	// IMP.request_pay(param, callback) 결제창 호출
-     	  IMP.request_pay({ // param
-          pg: "html5_inicis",
-          pay_method: "card",
+     	  IMP.request_pay({ // 결제 요청변수
+          pg: "html5_inicis", // pg사 [ 아임포트 관리자페이지에서 선택한 pg사 ]
+          pay_method: document.getElementById("payselect").innerHTML,	// 결제방식
           merchant_uid: "ORD20180131-0000011",
           name: "아무거나", // 결제창에 나오는 결제 이름
-          amount: document.getElementById("totalprice").value*1 , // 결창에 나오는 가격
+          amount: document.getElementById("totalpay").innerHTML, // 결창에 나오는 가격
           buyer_email: "gildong@gmail.com",
-          buyer_name: "홍길동",
-          buyer_tel: "010-4242-4242",
-          buyer_addr: "서울특별시 강남구 신사동",
-          buyer_postcode: "01181"
+          buyer_name: $("#name").val(),
+          buyer_tel: $("#phone").val(),
+          buyer_addr: $("#sample4_roadAddress").val()+","+ $("#sample4_jibunAddress").val()+","+$("#sample4_detailAddress").val(),
+          buyer_postcode: $("#sample4_postcode").val()
 
       }, function (rsp) { // callback
           if (rsp.success) {
-			// 결제 성공시
+			// 결제 성공시 -> 주문완료 페이지로 이동
           } else {
-			alert(rsp.error_msg);
+			// 결제 실패 했을때
+				// 테스트 : 결제 성공
+				$.ajax({
+					url : "../../controller/productpaymentcontroller.jsp",
+					data : {
+						order_name : $("#name").val(),
+						order_phone : $("#phone").val(),
+						order_address : $("#sample4_roadAddress").val()+","+ $("#sample4_jibunAddress").val()+","+$("#sample4_detailAddress").val()+","+$("#sample4_postcode").val(),
+						order_pay : document.getElementById("totalpay").innerHTML,
+						order_payment : document.getElementById("payselect").innerHTML,
+						delivery_pay : 3000,
+						order_request : document.getElementById("prequest").value
+					},
+					success : function(result){
+						if(result == 1) {location.href="productpaymentsuccess.jsp";} 
+						else { alert("오류 관리자에게 문의"); }
+					}
+					
+				});
+				
+				
           }
       });
 	}
@@ -508,6 +542,27 @@
 	}); 
 	/* 회원과 동일 체크 end */
 	
+	/* 결제 정보 */
+	
+	function pointcheck(mpoint){
+		
+		var point= document.getElementById("point").value*1;
+		if(mpoint < point) {
+			alert("포인트가 부족합니다.");
+			point = 0;
+		}else {
+			document.getElementById("usepoint").innerHTML = point;
+
+		}
+		
+		
+			var totalprice = document.getElementById("totalprice").innerHTML*1;
+			var totaldeli = document.getElementById("totaldeli").innerHTML*1;
+			document.getElementById("totalpay").innerHTML =totalprice+totaldeli-point;
+			
+
+	}
+	/* 결제 정보 end*/
 	
 	
 	

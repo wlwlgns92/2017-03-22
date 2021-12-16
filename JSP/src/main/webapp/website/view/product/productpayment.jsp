@@ -34,10 +34,10 @@
 	<input type="hidden" id="mname" value="<%=member.getM_name() %>">
 	<input type="hidden" id="mphone" value="<%=member.getM_phone() %>">
 	
-	<input type="text" id="address1" value="<%=address[0] %>">
-	<input type="text" id="address2" value="<%=address[1] %>">
-	<input type="text" id="address3" value="<%=address[2] %>">
-	<input type="text" id="address4" value="<%=address[3] %>">
+	<input type="hidden" id="address1" value="<%=address[0] %>">
+	<input type="hidden" id="address2" value="<%=address[1] %>">
+	<input type="hidden" id="address3" value="<%=address[2] %>">
+	<input type="hidden" id="address4" value="<%=address[3] %>">
 	
 	
 	
@@ -99,15 +99,59 @@
 				</div>
 				<input type="text" id="sample4_detailAddress" name="address4" placeholder="상세주소" class="form-control">
 			</div>
-		</div>
+		
 			<br><br><br>
 
-			<div class="col-md-6">
+			<div class="col-md-6 border">
 				<h3> 결제 정보</h3>
+				<h6> 결제 내용 </h6>
+				<div class="row">
+						<div class="col-md-3 m2"><label>마일리지</label> </div>
+						<div class="col-md-8">
+						<input type="text" id="point" placeholder="사용할 포인트"> 
+						<button class="btn btn-info" onclick="pointcheck(<%=member.getM_point()%>)">사용</button>
+						<br>
+						사용가능 마일리지 : <%=member.getM_point() %>
+				</div>
 			</div>
+			<br><hr><br>
+			
+			<h6>결제 금액</h6>
+				<div class="row">
+					<div class="col-md-3"> 총 주문금액 </div> 
+					<div class="col-md-9 text-right payment">
+						<span id="totalprice"> <%=totalprice %> </span>
+						총 상품 : <%=carts.size() %>
+					 </div>
+
+					<div class="col-md-3"> 배송비 </div> 
+					<div class="col-md-9 text-right"> <span id="totaldeli" class="payment"> 3000 </span> </div>
+					
+					<div class="col-md-3">사용 포인트</div>
+						<div class="col-md-9 text-right "> <span id="usepoint" class="payment">0</span></div>
+						
+						<div class="col-md-3">최종 결제금액</div>
+						<div class="col-md-9 text-right "> <span id="totalpay" class="payment"><%=totalprice+3000 %></span></div>
+				</div>
+			
+			<br><hr><br>
+			<h6>결제 방식</h6>
+				<div class="row d-flex justify-content-around">
+					<button onclick="paymentselect('samsung');" class="btn btn-outline-danger col-md-2">삼성페이</button>
+					<button onclick="paymentselect('card');" class="btn btn-outline-danger col-md-2">신용카드</button>
+					<button onclick="paymentselect('trans');" class="btn btn-outline-danger col-md-2">계좌이체</button>
+					<button onclick="paymentselect('phone');" class="btn btn-outline-danger col-md-2">휴대폰</button>
+					<button onclick="paymentselect('kakao');" class="btn btn-outline-danger col-md-2">카카오페이</button>
+				</div>
+				
+				<div id="payselect"></div>
+				<div class="row d-flex justify-content-around m-5">
+					<button class="col-md-5 form-control p-3" onclick="payment();">결제하기</button>
+					<button class="col-md-5 form-control p-3">취소하기</button>
+				</div>
+		</div>
+		</div>
 		
-		</div><input id="totalprice" value="<%=totalprice %>">
-		<button onclick="payment();">결제</button>
 	</div>
 </body>
 </html>
