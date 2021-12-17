@@ -31,7 +31,6 @@
 				<input type="hidden" name="oldfile" value="<%=board.getB_file() %>"> <!-- 첨부파일 변경이 없을 경우 기존파일을 사용하기 위해 -->
 				제목 : <input type="text" name="title" value="<%=board.getB_title() %>"><br>
 				내용  : <textarea rows="10" cols="20" name="contents"><%=board.getB_contents() %></textarea><br>
-				첨부파일1 : <input type="file" name="file"><%=board.getB_file() %><br>
 				<input type="submit" value="수 정"><br>
 			</form>
 		</div>

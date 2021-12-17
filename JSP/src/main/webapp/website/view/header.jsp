@@ -1,3 +1,4 @@
+<%@page import="dao.ProductDao"%>
 <%@page import="dto.Login"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -24,7 +25,7 @@
 	
 	
 		<h3> 헤더 부분 </h3>
-		
+		<% ProductDao.getProductDao().stockupdate(); %>
 		<%
 			Login login = (Login)session.getAttribute("login");
 			String loginid = null; // 전역변수로 사용하기 위해 if문 밖에서 선언 / null을 넣지않으면 초기값이 없기때문에 비교(같다,작다,크다)를 하지 못한다.

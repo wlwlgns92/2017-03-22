@@ -154,7 +154,7 @@ public class ProductDao extends DB{
 		
 	}
 	
-	
+	// 좋아요 확인 메소드
 	public boolean p_likecheck(int p_num, int m_num) {
 		
 		String sql = null;
@@ -169,4 +169,17 @@ public class ProductDao extends DB{
 		
 	}
 	
+	// 재고 0이면 품절로 update
+	public void stockupdate() {
+		
+		// 재고가 0인 제품 찾기
+		String sql = "select * from product where p_stock = 0";
+		try {
+			ps = con.prepareStatement(sql);	rs = ps.executeQuery();
+			while(rs.next()) {
+				sql = "update product set p_active = 3 where p_num ="+rs.getInt(1);
+				ps = con.prepareStatement(sql);	ps.executeUpdate();
+			}
+		} catch (Exception e) {}
+	}
 }

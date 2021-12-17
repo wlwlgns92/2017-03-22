@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dto.Cart;
 import dto.Porder;
+import dto.Porderdetail;
 
 public class PorderDao extends DB{
 
@@ -14,6 +15,7 @@ public class PorderDao extends DB{
 	public static PorderDao porderDao = new PorderDao();
 	public static PorderDao getPorderDao() { return porderDao; }
 	
+	// 1. 주문등록 
 	public boolean orderwrite(Porder porder, ArrayList<Cart> carts) {
 		
 		String sql = "insert into porder(m_num, order_name, order_phone, order_address, order_pay, order_payment, delivery_pay, order_contents) values(?,?,?,?,?,?,?,?)";
@@ -43,6 +45,13 @@ public class PorderDao extends DB{
 					ps.setInt(3, cart.getP_count());
 					ps.setInt(4, 1);
 					ps.executeUpdate();
+					
+					// 3. 재고 업데이트 [ 주문시 제품 재고 차감 ]
+					sql = "update product set p_stock = p_stock-? where p_num = ?";
+					ps = con.prepareStatement(sql);
+					ps.setInt(1, cart.getP_count());
+					ps.setInt(2, cart.getP_num());
+					ps.executeUpdate();
 				}
 				return true;
 			}
@@ -52,4 +61,32 @@ public class PorderDao extends DB{
 		
 		return false;
 	}
+	
+	// 주문목록 빼오기
+	public ArrayList<Porder> getporderlist (int m_num) {
+		ArrayList<Porder> porders = new ArrayList<Porder>();
+		String sql = "select * from porder where m_num ="+m_num+" order by order_num desc";
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Porder porder = new Porder(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getInt(7), rs.getString(8), rs.getInt(9), rs.getInt(10), rs.getString(11));
+				porders.add(porder);
+			}return porders;
+		} catch (Exception e) {} return null;
+	}
+	
+	public ArrayList<Porderdetail> getporderdetaillist (int order_num) {
+		ArrayList<Porderdetail> porderdetails = new ArrayList<Porderdetail>();
+		String sql = "select * from porderdetail where order_num = "+order_num;
+		try {
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				Porderdetail porderdetail = new Porderdetail(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
+				porderdetails.add(porderdetail);
+			}return porderdetails;
+		} catch (Exception e) { System.out.println( e );} return null;
+	}
+	
 }

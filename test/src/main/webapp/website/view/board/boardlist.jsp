@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="dao.BoardDao"%>
+<%@page import="dto.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,22 +23,21 @@
 					</tr>
 				</thead>
 				<tbody>
+				<% 
+				ArrayList<Board> boards = BoardDao.getBoardDao().getboard();
+				%>
+					<%for(Board board : boards) {%>
 					<tr>
-						<td>1</td> <td><a href="boardview.jsp">커피추천</a></td> <td>조지훈</td> <td>12-10</td>
+						<td><%=board.getB_no() %></td> 
+						<td><a href="boardview.jsp?b_no=<%=board.getB_no() %>"><%=board.getB_title() %></a></td>
+						<td><%=board.getB_writer() %></td> 
+						<td><%=board.getB_date() %></td>
 					</tr>
-					<tr>	
-						<td>2</td> <td><a href="boardview.jsp">커피추천</a></td> <td>조지훈</td> <td>12-10</td>
-					</tr>
-					<tr>
-						<td>3</td> <td><a href="boardview.jsp">커피추천</a></td> <td>조지훈</td> <td>12-10</td>
-					</tr>
-					<tr>
-						<td>4</td> <td><a href="boardview.jsp">커피추천</a></td> <td>조지훈</td> <td>12-10</td>
-					</tr>
+					<%} %>
 				</tbody>
 			</table>
 			<div>
-				<button class="form-control">글쓰기</button>
+				<a href="boardwrite.jsp"> <button class="form-control">글쓰기</button></a>
 			</div>
 		</div>
 		</div>
