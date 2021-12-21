@@ -597,3 +597,158 @@
 	
 	
 	
+	/* json */
+	/*
+		1. var 변수명 = 값 : 하나의 값 저장
+		2. var 배열명 = [ ]  : 여러개 값 저장
+		3. var json = { } : 어러개 엔트리(키:값) 저장
+			// json 키 호출시  Object.keys(json 변수명); : 모든 키 호출 [ 기본적으로 순서는 보장 안되지만, 개발자가 수정 가능함 ] 
+			// json 값 호출시 => 키를 이용함
+				// json변수명[키] => 값호출
+			// json 활용 [ 배열과 중첩 사용 가능 ]
+				// 키 : { 키: [ ] }
+			// DB 데이터 -> json으로 변환 [ json 통신 ]
+	*/
+	
+	// var : 변수자료형 [ js는 자료형 없다 ]
+	// 배열 형식
+
+	//json 형식 { }[java map 형식]
+	//var test = { 'id' : 'qweqwe', 'password' : 'qweqwe'};
+		// 키 : 값 => 한쌍[ 엔트리 ]
+	//var keys = Object.keys(test); 
+		// Object.keys(json 변수명); : 모든 키 호출 [ 기본적으로 순서는 보장 안되지만, 개발자가 수정 가능함 ] 
+	//for(var i = 0; i < keys.length; i++) { // 키 개수만큼 반복
+	//	var key = keys[i];
+	//	alert("키 :" + key+" 값 :" + test[key]); // value 값을 호출할 때는 키값을 이용해 호출
+	//}
+		// json 형식으로 가져오기
+	// $.getjson('경로명/파일명', function(json인수명){ });
+	//주문 그래프
+	$.getJSON('../../controller/productchart.jsp?type=1', function(jsonObject){
+		var keyval = [ ]; // 모든 키를 저장하는 배열
+		var valueval = [ ]; // 모든 값을 저장하는 배열
+	var keys = Object.keys(jsonObject); 
+		// Object.keys(json 변수명); : 모든 키 호출 [ 기본적으로 순서는 보장 안되지만, 개발자가 수정 가능함 ] 
+	for(var i = 0; i < keys.length; i++) { // 키 개수만큼 반복
+		keyval[i] = keys[i];
+		valueval[i] = jsonObject[ keyval[i] ];
+	//	alert("키 :" + key+" 값 :" + jsonObject[key]); // value 값을 호출할 때는 키값을 이용해 호출
+	}
+	/* 차트만들기 */
+	
+	// 1. 차르를 표시할 위치 선정 [ canvas 태그 id와 동일해야 한다. ]
+	var content = document.getElementById("mychart").getContext("2d");
+	// 2. 차트 변수 만들기
+	// var 차트이름 = new Chart("차트위치",{차트속성 : 값 , 차트속성 : 값});
+	var mychart = new Chart(content , {
+		
+		type : 'bar', // 차트의 형태 [ bar : 막대차트 // line : 선차트 등등]
+		data : { // 차트의 데이터 [ 가로축, 세로축, 계열값] 
+			labels : keyval, // 가로축
+			datasets : [  // 계열 추가 [ {계열1}, {계열2}, {계열1}]
+				{ // 하나의 범례 = 하나의 계열 
+				label : '제품등록수', // 계열 이름
+				data: valueval ,// 계열값
+				backgroundColor : [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)'
+				],
+				borderColor : [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)'
+				],
+				backgroundwidth : 1,
+				
+			}]
+			
+		},
+		options: { // 차트옵션 [y축 0부터 시작]
+			scales: {
+				yAxes:[{
+					ticks: {
+						beginAtZero: true 
+					}
+				}]
+			}
+		} 
+		
+	});
+	/* 차트만들기 end */	
+	});
+	
+	/* json end*/
+	
+	// 제품별 판매량 그래프 //
+	// 차트가 들어갈 자리 !
+	
+	$.getJSON('../../controller/productchart.jsp?type=2', function(jsonObject){ 
+		
+		var productname = [ ]; // 제품이름 배열
+		var productcount = [ ]; // 제품별 판매량
+		var keys2 = Object.keys(jsonObject);
+		for(var i = 0; i < keys2.length; i++) {
+			productname[i] = keys2[i]; // json 변수명에 있는 모든 키를 이름배열에 저장
+			productcount[i] = jsonObject[productname[i]]; // json변수명에 있는 값을 판매량 배열에 저장
+		}
+		
+		var content2 = document.getElementById("productchart").getContext("2d");
+		var mychart2 = new Chart(content2 , {
+		
+			type : 'line', // 차트의 형태 [ bar : 막대차트 // line : 선차트 등등]
+			data : { // 차트의 데이터 [ 가로축, 세로축, 계열값] 
+				labels : productname, // 가로축
+				datasets : [  // 계열 추가 [ {계열1}, {계열2}, {계열1}]
+					{ // 하나의 범례 = 하나의 계열 
+					label : '제품별 판매량', // 계열 이름
+					data: productcount
+					}
+				]		
+			}		
+		});
+	});
+	
+	
+	/* 라인 그래프 */
+	
+	
+	/* option 변경 */
+	function pchange() {
+
+		var p_num = $("#pselect").val(); // 해당 아이디의 값을 가져오기 jquery
+		$.getJSON('../../controller/productchart.jsp?type=3&p_num='+p_num, function(jsonObject){
+		var productdate = [ ];
+		var productcount2 = [ ];
+		var keys3 = Object.keys(jsonObject);
+		for(var i = 0; i < keys3.length; i++) {
+			productdate[i] = keys3[i]; // json 변수명에 있는 모든 키를 이름배열에 저장
+			productcount2[i] = jsonObject[productdate[i]]; // json변수명에 있는 값을 판매량 배열에 저장
+		}
+		var content3 = document.getElementById("productdatechart").getContext("2d");
+		var mychart3 = new Chart(content3 , {
+		
+			type : 'line', // 차트의 형태 [ bar : 막대차트 // line : 선차트 등등]
+			data : { // 차트의 데이터 [ 가로축, 세로축, 계열값] 
+				labels : productdate, // 가로축
+				datasets : [  // 계열 추가 [ {계열1}, {계열2}, {계열1}]
+					{ // 하나의 범례 = 하나의 계열 
+					label : '제품별 판매추이', // 계열 이름
+					data: productcount2
+					}
+				]		
+			}		
+		});
+		});
+	}
+	/* option 변경 end*/
+	
+	
+	

@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="/JSP/website/css/main.css">
 </head>
 <body>
-	<!-- 부트스트랩 js 설정 -->
+	<!-- jquery 설정 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -22,7 +22,8 @@
 	<script type="text/javascript" src="/JSP/website/js/main.js"></script>
 	<!-- 다음 주소 api 호출 -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	
+	<!-- 차트 API -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 	
 		<h3> 헤더 부분 </h3>
 		<% ProductDao.getProductDao().stockupdate(); %>
