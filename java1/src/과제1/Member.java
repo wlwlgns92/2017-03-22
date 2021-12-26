@@ -1,145 +1,120 @@
-package °úÁ¦1;
+package ê³¼ì œ1;
 
-public class Member { // 1Â÷
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Scanner;
+
+public class Member {
 	
-	// ÇÊµå
-	private String m_id;
-	private String m_pw;
-	private String m_name;
-	private String m_phone;
-	// »ı¼ºÀÚ
-	// ±øÅë
+	private String id;
+	private String password;
+	private String name;
+	private String phone;
+	
 	public Member() {
 	
 	}
-	
-	public Member(String m_id, String m_pw, String m_name, String m_phone) {
-		super();
-		this.m_id = m_id;
-		this.m_pw = m_pw;
-		this.m_name = m_name;
-		this.m_phone = m_phone;
+
+	public Member(String id, String password, String name, String phone) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.phone = phone;
 	}
-	//È¸¿ø°¡ÀÔ ¸Ş¼Òµå
-	public static boolean signup() {
+
+	// ë¡œê·¸ì¸
+	public Member(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+
+	public static void signup() {
+		Scanner scanner = Memberfile.scanner;
+		System.out.print("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš” : "); String id = scanner.next();
+		System.out.print("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” : "); String password = scanner.next();
+		System.out.print("ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš” : "); String name = scanner.next();
+		System.out.print("ì—°ë½ì²˜ë¥¼ ì…ë ¥í•˜ì„¸ìš” : "); String phone = scanner.next();
 		
-		System.out.print("»ç¿ëÇÏ½Ç ¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_id = BookApplication.scanner.next();
-			boolean check = idcheck(m_id);
-			if(check) {
-				System.out.println("»ç¿ëÁßÀÎ ¾ÆÀÌµğ ÀÔ´Ï´Ù.");
-				return false;
+		Member member = new Member(id, password, name, phone);
+		
+		for(int i =0; i< Memberfile.members.length; i++) {
+			if(Memberfile.members[i] == null) {
+				Memberfile.members[i] = member; break;
 			}
-		System.out.print("»ç¿ëÇÏ½Ç ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_pw = BookApplication.scanner.next();
-		System.out.print("¼ºÇÔÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_name = BookApplication.scanner.next();
-		System.out.print("¿¬¶ôÃ³¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_phone = BookApplication.scanner.next();
+		}
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("C:/Users/PC/git/2017-03-22/java1/src/ê³¼ì œ1/member.txt");
+			String outString = member.id+","+member.password+","+member.name+","+member.phone+"\n";
+			
+			fileOutputStream.write(outString.getBytes());
+		} catch (Exception e) {}
 		
-		for(int i =0; i < BookApplication.members.length; i++) {
-			if(BookApplication.members[i] == null) {
+	}
+	
+	public static void login() {
+		Scanner scanner = Memberfile.scanner;
+		System.out.print("ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš” : "); String id = scanner.next();
+		System.out.print("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” : "); String password = scanner.next();
+		
+		Member member = new Member(id, password);
+		
+		for(int i = 0; i < Memberfile.members.length; i++) {
+			if(Memberfile.members[i] == null) {
+				Memberfile.members[i] = member; break;
+			}
+		}	
+		byte[] bs = new byte[1024];
+		try {
+			FileInputStream fileInputStream = new FileInputStream("C:/Users/PC/git/2017-03-22/java1/src/ê³¼ì œ1/member.txt");
+			fileInputStream.read(bs);
+			String íšŒì›ì •ë³´ = new String(bs);
+			String[] íšŒë°° = íšŒì›ì •ë³´.split(",");
+			
+			for(int i = 0; i < íšŒë°°.length; i++) {
 				
-				Member member = new Member(m_id, m_pw, m_name, m_phone);
-				BookApplication.members[i] = member;
-				System.out.println("È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
-				return true;
+				if(member.id.equals(íšŒë°°[i]) && member.password.equals(íšŒë°°[i])) {
+					System.out.println("ë¡œê·¸ì¸ ì„±ê³µ"); break;
+				}else {
+					System.out.println("ë¡œê·¸ì¸ ì‹¤íŒ¨");
+				}
 			}
-		}
+
+		} catch (Exception e) {}
 		
-		return false;
-	}
-	//·Î±×ÀÎ ¸Ş¼Òµå
-	public static String login() {
-		System.out.print("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_id = BookApplication.scanner.next();
-		System.out.print("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_pw = BookApplication.scanner.next();
 		
-		for(int i =0; i < BookApplication.members.length; i++) {
-			if(BookApplication.members[i] != null && BookApplication.members[i].getM_id().equals(m_id) && BookApplication.members[i].getM_pw().equals(m_pw)) {
-				System.out.println("·Î±×ÀÎ ¼º°ø");
-				return m_id; 
-			}
-		}
-		return null;
 	}
-	//¾ÆÀÌµğÃ£±â ¸Ş¼Òµå
-	public static boolean findid() {
-		
-		System.out.print("¼ºÇÔÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_name = BookApplication.scanner.next();
-		System.out.print("¿¬¶ôÃ³¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_phone = BookApplication.scanner.next();
-		for(int i =0; i < BookApplication.members.length; i++) {
-			if(BookApplication.members[i] != null && BookApplication.members[i].getM_name().equals(m_name) && BookApplication.members[i].getM_phone().equals(m_phone)) {
-				System.out.println("È¸¿ø´ÔÀÇ ¾ÆÀÌµğ´Â : " + BookApplication.members[i].getM_id());
-				return true;
-			}
-		}
-		return false;
-	}
-	// ºñ¹Ğ¹øÈ£Ã£±â ¸Ş¼Òµå
-	public static boolean findpw() {
-		
-		System.out.print("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_id = BookApplication.scanner.next();
-		System.out.print("¿¬¶ôÃ³¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :"); String m_phone = BookApplication.scanner.next();
-		for(int i =0; i < BookApplication.members.length; i++) {
-			if(BookApplication.members[i] != null && BookApplication.members[i].getM_id().equals(m_id) && BookApplication.members[i].getM_phone().equals(m_phone)) {
-				System.out.println("È¸¿ø´ÔÀÇ ºñ¹Ğ¹øÈ£´Â : " + BookApplication.members[i].getM_pw());
-				return true;
-			}
-		}
-		return false;
-	}
-	//Áßº¹Ã¼Å© ¸Ş¼Òµå
-	public static boolean idcheck(String m_id) {
-		for(int i = 0 ; i < BookApplication.members.length; i++) {
-			if(BookApplication.members[i] != null && BookApplication.members[i].getM_id().equals(m_id)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public String getM_id() {
-		return m_id;
+	public String getId() {
+		return id;
 	}
 
-	public void setM_id(String m_id) {
-		this.m_id = m_id;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getM_pw() {
-		return m_pw;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setM_pw(String m_pw) {
-		this.m_pw = m_pw;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getM_name() {
-		return m_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setM_name(String m_name) {
-		this.m_name = m_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getM_phone() {
-		return m_phone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setM_phone(String m_phone) {
-		this.m_phone = m_phone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	
 	
-	
-	// ¸ğµçÇÊµå ´ã´Â »ı¼ºÀÚ.
-	
-	// È¸¿ø°¡ÀÔ
-	
-	// ¾ÆÀÌµğ Áßº¹Ã¼Å©
-	
-	//  ·Î±×ÀÎ
-	
-	// ¾ÆÀÌµğÃ£±â
-	
-	// ºñ¹Ğ¹øÈ£Ã£±â
-
 }
